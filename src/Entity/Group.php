@@ -27,9 +27,9 @@ class Group
     private $id;
 
     /**
-     * @ORM\PostedAt
+     * @ORM\Column(type="datetime", name="date_created")
      */
-    private $postedAt;
+    private $dateCreated;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -79,17 +79,17 @@ class Group
     /**
      * @return string
      */
-    public function getPostedAt()
+    public function getDateCreated()
     {
-        return $this->postedAt;
+        return $this->dateCreated;
     }
 
     /**
-     * @param string $postedAt
+     * @param string $dateCreated
      */
-    public function setPostedAt($postedAt)
+    public function setDateCreated($dateCreated)
     {
-        $this->postedAt = $postedAt;
+        $this->dateCreated = $dateCreated;
     }
 
     /**

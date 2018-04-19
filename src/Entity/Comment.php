@@ -28,9 +28,9 @@ class Comment
     private $content;
 
     /**
-     * @ORM\PostedAt
+     * @ORM\Column(type="datetime", name="date_created")
      */
-    private $postedAt;
+    private $dateCreated;
 
     //RELATIONSHIPS
 
@@ -41,7 +41,7 @@ class Comment
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Trick", mappedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true)
      */
     private $trick;
@@ -86,17 +86,17 @@ class Comment
     /**
      * @return string
      */
-    public function getPostedAt()
+    public function getDateCreated()
     {
-        return $this->postedAt;
+        return $this->dateCreated;
     }
 
     /**
-     * @param string $postedAt
+     * @param string $dateCreated
      */
-    public function setPostedAt($postedAt)
+    public function setDateCreated($dateCreated)
     {
-        $this->postedAt = $postedAt;
+        $this->dateCreated = $dateCreated;
     }
 
     /**

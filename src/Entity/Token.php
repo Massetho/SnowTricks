@@ -25,9 +25,9 @@ class Token
     private $id;
 
     /**
-     * @ORM\PostedAt
+     * @ORM\Column(type="datetime", name="date_created")
      */
-    private $postedAt;
+    private $dateCreated;
 
     /**
      * @ORM\Column(type="string", length=1500)
@@ -64,17 +64,17 @@ class Token
     /**
      * @return mixed
      */
-    public function getPostedAt()
+    public function getDateCreated()
     {
-        return $this->postedAt;
+        return $this->dateCreated;
     }
 
     /**
-     * @param mixed $postedAt
+     * @param mixed $dateCreated
      */
-    public function setPostedAt($postedAt)
+    public function setDateCreated($dateCreated)
     {
-        $this->postedAt = $postedAt;
+        $this->dateCreated = $dateCreated;
     }
 
     /**
@@ -102,7 +102,7 @@ class Token
     public function generate()
     {
         $this->setToken(uniqid());
-        $this->setPostedAt(time());
+        $this->setDateCreated(time());
         return $this;
     }
 
@@ -113,7 +113,7 @@ class Token
     {
         $expirationPeriod = 5 * 24 * 60 * 60; // First number is number of days before expiration of a token
         $now = time();
-        $token = strtotime($this->getPostedAt());
+        $token = strtotime($this->getDateCreated());
         $expirationTime = $token + $expirationPeriod;
 
         return ($now >= $expirationTime) ? false : true;

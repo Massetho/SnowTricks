@@ -12,9 +12,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
+ * @UniqueEntity("name")
  */
 class Trick
 {
@@ -26,16 +28,16 @@ class Trick
     private $id;
 
     /**
-     * @ORM\Unique
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=125, unique=true)
      */
     private $name;
 
     /**
-     * @ORM\PostedAt
+     * @ORM\Column(type="datetime", name="date_created")
      */
-    private $postedAt;
+    private $dateCreated;
 
+    
     /**
      * @ORM\Column(type="string", length=5000)
      */
@@ -50,17 +52,17 @@ class Trick
     private $group;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="trick", cascade={"remove"})
      */
     private $trickLoggers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"remove"})
      */
     private $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"remove"})
      */
     private $comments;
 
@@ -110,17 +112,17 @@ class Trick
     /**
      * @return string
      */
-    public function getPostedAt()
+    public function getDateCreated()
     {
-        return $this->postedAt;
+        return $this->dateCreated;
     }
 
     /**
-     * @param string $postedAt
+     * @param string $dateCreated
      */
-    public function setPostedAt($postedAt)
+    public function setDateCreated($dateCreated)
     {
-        $this->postedAt = $postedAt;
+        $this->dateCreated = $dateCreated;
     }
 
     /**
@@ -150,7 +152,7 @@ class Trick
     /**
      * @param Group $group
      */
-    public function setGroup($group)
+    public function setGroup(Group $group)
     {
         $this->group = $group;
     }

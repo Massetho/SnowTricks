@@ -23,9 +23,9 @@ class Video
     private $id;
 
     /**
-     * @ORM\PostedAt
+     * @ORM\Column(type="datetime", name="date_created")
      */
-    private $postedAt;
+    private $dateCreated;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -46,6 +46,7 @@ class Video
         $this->tricks = new ArrayCollection();
     }
 
+    //GETTERS & SETTERS
     /**
      * @return Collection|Trick[]
      */
@@ -53,5 +54,55 @@ class Video
     {
         return $this->tricks;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * @param mixed $dateCreated
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
 
 }

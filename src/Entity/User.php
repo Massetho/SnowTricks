@@ -11,65 +11,84 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Entity\Token;
 
 /**
+ * @ORM\Table(name="trick_user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class User
 {
     /**
-     * @Id
+     * @var int id
+     *
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string $username
+     *
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Unique
-     * @ORM\Column(type="string", length=125)
+     * @var string $email
+     *
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
     /**
+     * @var string $password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\PostedAt
+     * @var string $dateCreated
+     * @ORM\Column(type="datetime", name="date_created")
      */
-    private $postedAt;
+    private $dateCreated;
 
     /**
+     * @var int $registered
      * @ORM\Column(type="integer")
      */
     private $registered;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Token", mappedBy="user")
+     * @var array $tokens
+     * @ORM\OneToMany(targetEntity="App\Entity\Token", mappedBy="user", cascade={"remove"})
      */
     private $tokens;
 
     /**
+     * @var array $comments
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="user")
+     * @var array $trickLoggers
+     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="user", cascade={"remove"})
      */
     private $trickLoggers;
 
     //FONCTIONS
 
-    public function __construct()
+    /**
+     * @param \App\Entity\Token $tokenEntity
+     */
+    public function __construct(Token $tokenEntity)
     {
+        $this->tokenEntity = $tokenEntity;
         $this->tokens = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->trickLoggers = new ArrayCollection();
@@ -142,19 +161,19 @@ class User
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPostedAt()
+    public function getDateCreated()
     {
-        return $this->postedAt;
+        return $this->dateCreated;
     }
 
     /**
-     * @param mixed $postedAt
+     * @param string $dateCreated
      */
-    public function setPostedAt($postedAt)
+    public function setDateCreated($dateCreated)
     {
-        $this->postedAt = $postedAt;
+        $this->dateCreated = $dateCreated;
     }
 
     /**
@@ -188,6 +207,13 @@ class User
     public function getTokens()
     {
         return $this->tokens;
+    }
+    /**
+     * @param Token $token
+     */
+    public function setToken($token)
+    {
+        $this->tokens[] = $token;
     }
 
     /**
