@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
+ * @ORM\Table(name="trick_group")
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  */
 class Group
@@ -39,7 +40,7 @@ class Group
     //RELATIONSHIPS
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="group")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Trick", mappedBy="groups")
      */
     private $tricks;
 

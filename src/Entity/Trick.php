@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -46,10 +47,13 @@ class Trick
     //RELATIONSHIPS
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Group", inversedBy="tricks")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Group", inversedBy="tricks")
+     * @ORM\JoinTable(name="tricks_groups",
+     *      joinColumns={@JoinColumn(name="trick_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="group_id", referencedColumnName="id")}
+     *      )
      */
-    private $group;
+    private $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="trick", cascade={"remove"})
@@ -73,6 +77,7 @@ class Trick
         $this->videos = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->trickLoggers = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     //GETTERS & SETTERS
@@ -142,19 +147,11 @@ class Trick
     }
 
     /**
-     * @return Group
+     * @return Collection|Group[]
      */
-    public function getGroup()
+    public function getGroups()
     {
-        return $this->group;
-    }
-
-    /**
-     * @param Group $group
-     */
-    public function setGroup(Group $group)
-    {
-        $this->group = $group;
+        return $this->groups;
     }
 
     /**
