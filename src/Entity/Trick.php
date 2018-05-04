@@ -36,7 +36,12 @@ class Trick
     /**
      * @ORM\Column(type="datetime", name="date_created")
      */
-    private $dateCreated;
+    private $date_created;
+
+    /**
+     * @ORM\Column(type="datetime", name="date_updated", nullable=true)
+     */
+    private $dateUpdated;
 
     
     /**
@@ -56,17 +61,22 @@ class Trick
     private $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="trick", cascade={"remove", "persist"})
      */
     private $trickLoggers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"remove", "persist"})     *
      */
     private $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="trick", cascade={"remove", "persist"})
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"remove", "persist"})
      */
     private $comments;
 
@@ -78,6 +88,7 @@ class Trick
         $this->comments = new ArrayCollection();
         $this->trickLoggers = new ArrayCollection();
         $this->groups = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     //GETTERS & SETTERS
@@ -85,7 +96,7 @@ class Trick
     /**
      * @return integer
      */
-    public function getId()
+    public function getId() :int
     {
         return $this->id;
     }
@@ -93,7 +104,7 @@ class Trick
     /**
      * @param integer $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -109,7 +120,7 @@ class Trick
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -119,7 +130,7 @@ class Trick
      */
     public function getDateCreated()
     {
-        return $this->dateCreated;
+        return $this->date_created;
     }
 
     /**
@@ -127,7 +138,7 @@ class Trick
      */
     public function setDateCreated($dateCreated)
     {
-        $this->dateCreated = $dateCreated;
+        $this->date_created = $dateCreated;
     }
 
     /**
@@ -141,7 +152,7 @@ class Trick
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -149,7 +160,7 @@ class Trick
     /**
      * @return Collection|Group[]
      */
-    public function getGroups()
+    public function getGroups() : Collection
     {
         return $this->groups;
     }
@@ -157,7 +168,7 @@ class Trick
     /**
      * @return Collection|Comment[]
      */
-    public function getComments()
+    public function getComments() : Collection
     {
         return $this->comments;
     }
@@ -165,7 +176,7 @@ class Trick
     /**
      * @return Collection|Video[]
      */
-    public function getVideos()
+    public function getVideos() : Collection
     {
         return $this->videos;
     }
@@ -173,10 +184,103 @@ class Trick
     /**
      * @return Collection|TrickLogger[]
      */
-    public function getTrickLoggers()
+    public function getTrickLoggers() : Collection
     {
         return $this->trickLoggers;
     }
 
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages() : Collection
+    {
+        return $this->images;
+    }
 
+    //ADDERS
+
+    /**
+     * @param Image $image
+     * @return Trick
+     */
+    public function addImage(Image $image)
+    {
+        $image->setTrick($this);
+        $this->images->add($image);
+
+        return $this;
+    }
+
+    /**
+     * @param Video $video
+     * @return Trick
+     */
+    public function addVideo(Video $video)
+    {
+        $video->setTrick($this);
+        $this->videos->add($video);
+
+        return $this;
+    }
+
+    /**
+     * @param TrickLogger $trickLogger
+     * @return Trick
+     */
+    public function addTrickLogger(TrickLogger $trickLogger)
+    {
+        $trickLogger->setTrick($this);
+        $this->trickLoggers->add($trickLogger);
+
+        return $this;
+    }
+
+    /**
+     * @param Comment $comment
+     * @return Trick
+     */
+    public function addComment(Comment $comment)
+    {
+        $comment->setTrick($this);
+        $this->comments->add($comment);
+
+        return $this;
+    }
+
+    //REMOVERS
+
+    /**
+     * @param Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+
+    /**
+     * @param Video $video
+     */
+    public function removeVideo(Video $video)
+    {
+        $this->videos->removeElement($video);
+    }
+
+
+    /**
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+
+    /**
+     * @param TrickLogger $trickLogger
+     */
+    public function removeTrickLogger(TrickLogger $trickLogger)
+    {
+        $this->trickLoggers->removeElement($trickLogger);
+    }
 }
