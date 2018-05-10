@@ -20,6 +20,7 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('topImage', TopImageType::class)
             ->add('name')
             ->add('date_created')
             ->add('description')

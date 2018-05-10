@@ -3,20 +3,20 @@
  * @description :
  * @package : PhpStorm.
  * @Author : quent
- * @date: 04/05/2018
- * @time: 10:25
+ * @date: 08/05/2018
+ * @time: 11:54
  */
-
 namespace App\Form;
 
-use App\Entity\Video;
+use App\Entity\Image;
+use App\Entity\TopImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class VideoType extends AbstractType
+class TopImageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,8 +24,8 @@ class VideoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', UrlType::class,
-            array('label' => 'Video\'s URL',
+        $builder->add('file', FileType::class,
+            array('label' => 'Image(JPG)',
                 'required' => false));
     }
 
@@ -35,7 +35,7 @@ class VideoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Video::class,
+            'data_class' => TopImage::class,
         ));
     }
 }

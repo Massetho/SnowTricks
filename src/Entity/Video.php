@@ -10,7 +10,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;/**
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
@@ -53,7 +54,7 @@ class Video
      * @Assert\Regex(
      *     pattern="#^(http|https)://(www.youtube.com|www.dailymotion.com|vimeo.com)/#",
      *     match=true,
-     *     message="L'url doit correspondre à l'url d'une vidéo Youtube, DailyMotion ou Vimeo"
+     *     message="The URL must be of a Youtube, DailyMotion or Vimeo video"
      * )
      */
     private $url;
@@ -208,7 +209,8 @@ class Video
     }
 
     /**
-     * @ORM\PrePersist() // Les trois événement suivant s’exécute avant que l’entité soit enregister
+     * This Function is called during those 3 events
+     * @ORM\PrePersist()
      * @ORM\PreUpdate()
      * @ORM\PreFlush()
      */
@@ -251,6 +253,29 @@ class Video
             $embed = "https://player.vimeo.com/video/".$id;
             return $embed;
         }
+    }
+
+    public function recomposeUrl()
+    {
+        $control = $this->getType();  // on récupère le type de la vidéo
+        $id = strip_tags($this->getCode()); // on récupère son identifiant
+
+        $url = '';
+        if($control == 'youtube')
+        {
+            $url = "https://www.youtube.com/watch?v=".$id;
+        }
+        else if ($control == 'dailymotion')
+        {
+            $url = "https://www.dailymotion.com/video/".$id;
+        }
+        else if($control == 'vimeo')
+        {
+            $url = "https://player.vimeo.com/video/".$id;
+        }
+
+        if ($url !== '')
+            $this->setUrl($url);
     }
 
     public function image()

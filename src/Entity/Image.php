@@ -45,6 +45,11 @@ class Image
      */
     private $path;
 
+    /**
+     * @var string
+     */
+    private $webPath;
+
     //RELATIONSHIPS
 
     /**
@@ -133,5 +138,22 @@ class Image
     {
         return $this->path;
     }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->webPath;
+    }
+
+    /**
+     * @param string $webPath
+     */
+    public function setWebPath($webPath)
+    {
+        $this->webPath = $webPath;
+    }
+
 
 }

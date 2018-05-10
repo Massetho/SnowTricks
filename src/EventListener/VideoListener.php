@@ -36,7 +36,25 @@ class VideoListener extends AbstractEntityListener
             return;
         }
 
-        $this->setDateCreated($entity);
+        // Check which fields were changes
+        $changes = $args->getEntityChangeSet();
+
+        // Declare a variable that will contain the name of the previous file, if exists.
+        $previousFilename = null;
+
+        // Verify if the file field was changed
+        if (array_key_exists("url", $changes)) {
+            // Update previous file name
+            $previousFilename = $changes["file"][0];
+        }
+
+        // If no new brochure file was uploaded
+        if (is_null($entity->getUrl())) {
+            // Let original filename in the entity
+            $entity->setFile($previousFilename);
+
+            $this->setDateCreated($entity);
+        }
     }
 
 }

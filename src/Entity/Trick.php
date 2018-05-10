@@ -76,6 +76,11 @@ class Trick
     private $images;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\TopImage", cascade={"remove", "persist"})
+     */
+    private $topImage;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"remove", "persist"})
      */
     private $comments;
@@ -197,6 +202,38 @@ class Trick
         return $this->images;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
+    }
+
+    /**
+     * @param mixed $dateUpdated
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        $this->dateUpdated = $dateUpdated;
+    }
+
+    /**
+     * @return TopImage
+     */
+    public function getTopImage()
+    {
+        return $this->topImage;
+    }
+
+    /**
+     * @param TopImage $topImage
+     */
+    public function setTopImage($topImage)
+    {
+        $this->topImage = $topImage;
+    }
+
     //ADDERS
 
     /**
@@ -283,4 +320,6 @@ class Trick
     {
         $this->trickLoggers->removeElement($trickLogger);
     }
+
+
 }

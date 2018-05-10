@@ -12,6 +12,7 @@ namespace App\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Image;
+use App\Entity\TopImage;
 
 class ImageListener extends AbstractEntityListener
 {
@@ -21,7 +22,7 @@ class ImageListener extends AbstractEntityListener
 
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Image) {
+        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
             return;
         }
 
@@ -32,7 +33,7 @@ class ImageListener extends AbstractEntityListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Image) {
+        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
             return;
         }
 
