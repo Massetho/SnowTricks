@@ -26,7 +26,7 @@ class TrickListener extends AbstractEntityListener
             return;
         }
 
-        $this->makeCollections($entity);
+        //$this->makeCollections($entity);
 
     }
 

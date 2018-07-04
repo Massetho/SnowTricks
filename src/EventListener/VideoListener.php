@@ -57,4 +57,14 @@ class VideoListener extends AbstractEntityListener
         }
     }
 
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Video) {
+            return;
+        }
+
+        $entity->recomposeUrl();
+    }
 }

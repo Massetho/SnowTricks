@@ -35,7 +35,7 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
+        if (!$entity instanceof Image) {
             return;
         }
 
@@ -64,9 +64,11 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
+        if (!$entity instanceof Image) {
             return;
         }
+
+        $same = 0;
 
         // Check which fields were changes
         $changes = $args->getEntityChangeSet();
@@ -78,10 +80,14 @@ class ImageUploadListener
         if(array_key_exists("file", $changes)){
             // Update previous file name
             $previousFilename = $changes["file"][0];
+
+            if (!is_null($entity->getFile()) && ($entity->getFile()->getFilename() === $previousFilename)) {
+                $same = 1;
+            }
         }
 
         // If no new brochure file was uploaded
-        if(is_null($entity->getFile())){
+        if(is_null($entity->getFile()) || ($same === 1)){
             // Let original filename in the entity
             $entity->setFile($previousFilename);
 
@@ -106,7 +112,7 @@ class ImageUploadListener
     private function uploadFile($entity)
     {
         // upload only works for Image entities
-        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
+        if (!$entity instanceof Image) {
             return;
         }
 
@@ -121,7 +127,7 @@ class ImageUploadListener
 
     private function removeFile($entity)
     {
-        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
+        if (!$entity instanceof Image) {
             return;
         }
 

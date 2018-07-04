@@ -10,9 +10,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -29,22 +31,39 @@ class Trick
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 120,
+     *      minMessage = "Trick name must be at least {{ limit }} characters long",
+     *      maxMessage = "Trick name cannot be longer than {{ limit }} characters"
+     * )
+     *
      * @ORM\Column(type="string", length=125, unique=true)
      */
     private $name;
 
     /**
+     * @var \DateTime $date_created
      * @ORM\Column(type="datetime", name="date_created")
      */
     private $date_created;
 
     /**
+     * @var \DateTime $dateUpdated
      * @ORM\Column(type="datetime", name="date_updated", nullable=true)
      */
     private $dateUpdated;
 
     
     /**
+     * @Assert\Length(
+     *      min = 12,
+     *      max = 5000,
+     *      minMessage = "Trick description must be at least {{ limit }} characters long",
+     *      maxMessage = "Trick description cannot be longer than {{ limit }} characters"
+     * )
+     *
      * @ORM\Column(type="string", length=5000)
      */
     private $description;
@@ -74,11 +93,6 @@ class Trick
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="trick", cascade={"remove", "persist"})
      */
     private $images;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\TopImage", cascade={"remove", "persist"})
-     */
-    private $topImage;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"remove", "persist"})
@@ -203,6 +217,31 @@ class Trick
     }
 
     /**
+     * @return Image
+     */
+    public function getTopImage() : Image
+    {
+        if (!$this->getImages()->isEmpty())
+            $topImage = $this->getImages()->first();
+        else
+            $topImage = new Image();
+        return $topImage;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getBottomImages()
+    {
+        $images = $this->getImages()->toArray();
+        if (is_array($images)) {
+            array_shift($images);
+            return $images;
+        }
+        return null;
+    }
+
+    /**
      * @return mixed
      */
     public function getDateUpdated()
@@ -218,22 +257,6 @@ class Trick
         $this->dateUpdated = $dateUpdated;
     }
 
-    /**
-     * @return TopImage
-     */
-    public function getTopImage()
-    {
-        return $this->topImage;
-    }
-
-    /**
-     * @param TopImage $topImage
-     */
-    public function setTopImage($topImage)
-    {
-        $this->topImage = $topImage;
-    }
-
     //ADDERS
 
     /**
@@ -246,6 +269,55 @@ class Trick
         $this->images->add($image);
 
         return $this;
+    }
+
+    /**
+     * @param Group $group
+     * @return Trick
+     */
+    public function addGroup(Group $group)
+    {
+        $this->groups->add($group);
+
+        return $this;
+    }
+
+    /**
+     * @param Image $image
+     * @return Trick
+     */
+    public function setTopImage(Image $image)
+    {
+        $firstKey = $this->images->indexOf($this->images->first());
+        if ($firstKey) {
+            $image->setTrick($this);
+            $this->images->set($image, $firstKey);
+        }
+        else
+            $this->addImage($image);
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $image
+     * @return Trick
+     */
+    public function addBottomImages($image)
+    {
+        if ($image instanceof Image)
+            $this->addImage($image);
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $image
+     * @return Trick
+     */
+    public function setBottomImages($image)
+    {
+        return $this->addBottomImages($image);
     }
 
     /**
@@ -320,6 +392,9 @@ class Trick
     {
         $this->trickLoggers->removeElement($trickLogger);
     }
+
+    //OTHER FUNCTIONS
+
 
 
 }

@@ -22,7 +22,7 @@ class ImageListener extends AbstractEntityListener
 
         $entity = $args->getEntity();
 
-        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
+        if (!$entity instanceof Image) {
             return;
         }
 
@@ -33,7 +33,7 @@ class ImageListener extends AbstractEntityListener
     {
         $entity = $args->getEntity();
 
-        if ((!$entity instanceof Image) && (!$entity instanceof TopImage)) {
+        if (!$entity instanceof Image) {
             return;
         }
 

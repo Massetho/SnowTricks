@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
@@ -20,24 +21,29 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('topImage', TopImageType::class)
             ->add('name')
-            ->add('date_created')
-            ->add('description')
+            ->add('description', TextareaType::class)
             ->add('groups', EntityType::class, array(
                 'class'        => 'App\Entity\Group',
                 'choice_label' => 'name',
                 'multiple'     => true,
             ))
-            ->add('images', CollectionType::class, array(
+            ->add('topImage', ImageType::class)
+            ->add('bottomImages', CollectionType::class, array(
                 'entry_type' => ImageType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'label' => false,
             ))
             ->add('videos', CollectionType::class, array(
                 'entry_type' => VideoType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'label' => false,
             ))
         ;
     }

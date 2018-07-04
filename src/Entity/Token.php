@@ -93,6 +93,24 @@ class Token
         $this->token = $token;
     }
 
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+
+
     //OTHER FUNCTIONS
 
     /**
@@ -101,8 +119,7 @@ class Token
      */
     public function generate()
     {
-        $this->setToken(uniqid());
-        $this->setDateCreated(time());
+        $this->setToken(md5(uniqid('', true)));
         return $this;
     }
 
@@ -113,7 +130,8 @@ class Token
     {
         $expirationPeriod = 5 * 24 * 60 * 60; // First number is number of days before expiration of a token
         $now = time();
-        $token = strtotime($this->getDateCreated());
+        //$token = strtotime($this->getDateCreated());
+        $token = $this->getDateCreated()->getTimestamp();
         $expirationTime = $token + $expirationPeriod;
 
         return ($now >= $expirationTime) ? false : true;
