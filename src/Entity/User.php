@@ -11,16 +11,19 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Entity\Token;
 
 /**
  * @ORM\Table(name="trick_user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("username")
- * @UniqueEntity("email")
+ * @UniqueEntity("username", message="Username already taken")
+ * @UniqueEntity("email", message="Email already taken")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var int id
@@ -33,7 +36,13 @@ class User
 
     /**
      * @var string $username
-     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 50,
+     *      minMessage = "Your username must be at least {{ limit }} characters long",
+     *      maxMessage = "Your username cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="string", length=100, unique=true)
      */
     private $username;
@@ -41,31 +50,37 @@ class User
     /**
      * @var string $email
      *
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Assert\Length(
+     *      max = 254,
+     *      maxMessage = "Your email cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
     /**
      * @var string $password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     private $password;
 
     /**
-     * @var string $dateCreated
+     * @var \DateTime $dateCreated
      * @ORM\Column(type="datetime", name="date_created")
      */
     private $dateCreated;
 
     /**
-     * @var int $registered
-     * @ORM\Column(type="integer")
+     * @var array $roles
+     * @ORM\Column(type="array")
      */
-    private $registered;
+    private $roles;
 
     /**
      * @var array $tokens
-     * @ORM\OneToMany(targetEntity="App\Entity\Token", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Token", mappedBy="user", cascade={"remove", "persist"})
      */
     private $tokens;
 
@@ -77,18 +92,32 @@ class User
 
     /**
      * @var array $trickLoggers
-     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\TrickLogger", mappedBy="user", cascade={"remove", "persist"})
      */
     private $trickLoggers;
+
+    /**
+     * @var string $plainPassword
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 4000,
+     *      minMessage = "Your password must be at least {{ limit }} characters long",
+     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
+     * )
+     */
+    private $plainPassword;
 
     //FONCTIONS
 
     /**
-     * @param \App\Entity\Token $tokenEntity
+     *
      */
-    public function __construct(Token $tokenEntity)
+    public function __construct()
     {
-        $this->tokenEntity = $tokenEntity;
+        $this->addRole('ROLE_USER');
+
         $this->tokens = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->trickLoggers = new ArrayCollection();
@@ -208,12 +237,17 @@ class User
     {
         return $this->tokens;
     }
+
     /**
      * @param Token $token
+     * @return User
      */
-    public function setToken($token)
+    public function addToken($token)
     {
-        $this->tokens[] = $token;
+        $token->setUser($this);
+        $this->tokens->add($token);
+
+        return $this;
     }
 
     /**
@@ -224,17 +258,77 @@ class User
         return $this->comments;
     }
 
-    //OTHER FUNCTIONS
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
 
     /**
-     * Generate and set a new token
-     * @return $this
+     * @param mixed $plainPassword
      */
-    public function generateToken()
+    public function setPlainPassword($plainPassword)
     {
-        $token = new Token();
-        $token->generate();
-        $this->setToken($token);
-        return $this;
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function addRole($role)
+    {
+        if(!is_array($this->getRoles())) {
+            $this->roles[] = $role;
+        }
+        else {
+            if (!in_array($role, $this->getRoles()))
+                $this->roles[] = $role;
+        }
+    }
+
+
+    //OTHER FUNCTIONS
+
+    //NEEDED FUNCTIONS FOR USERINTERFACE
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    //NEEDED FUNCTIONS FOR SERIALIZE
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

@@ -109,8 +109,6 @@ class Token
         $this->user = $user;
     }
 
-
-
     //OTHER FUNCTIONS
 
     /**
@@ -130,7 +128,7 @@ class Token
     {
         $expirationPeriod = 5 * 24 * 60 * 60; // First number is number of days before expiration of a token
         $now = time();
-        //$token = strtotime($this->getDateCreated());
+
         $token = $this->getDateCreated()->getTimestamp();
         $expirationTime = $token + $expirationPeriod;
 
