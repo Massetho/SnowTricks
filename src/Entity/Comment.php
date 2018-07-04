@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -23,11 +24,20 @@ class Comment
     private $id;
 
     /**
+     * @var string $content
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 1000,
+     *      minMessage = "Comments must be at least {{ limit }} characters long",
+     *      maxMessage = "Comments cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="string", length=1000)
      */
     private $content;
 
     /**
+     * @var \DateTime $dateCreated
      * @ORM\Column(type="datetime", name="date_created")
      */
     private $dateCreated;
@@ -84,7 +94,7 @@ class Comment
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -92,7 +102,7 @@ class Comment
     }
 
     /**
-     * @param string $dateCreated
+     * @param \DateTime $dateCreated
      */
     public function setDateCreated($dateCreated)
     {
