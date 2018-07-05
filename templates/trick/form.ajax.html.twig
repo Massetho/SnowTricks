@@ -1,0 +1,28 @@
+<script>
+    $(document).ready(function() {
+        $('#trickFormEdit').submit(function (e) {
+            e.preventDefault();
+            var $form = new FormData(this);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ submitPath }}",
+                data: $form,
+                processData: false,
+                contentType: false,
+
+                /*dataType: 'json',
+                headers: {
+                    'Content-Type': 'application/json'
+                },*/
+
+                success: function (response) {
+                    $('.trick-modal-body').html(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
+</script>

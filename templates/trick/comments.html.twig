@@ -1,0 +1,27 @@
+
+    {% for comment in comments %}
+        <div class="comment-wrap">
+            <div class="photo">
+                <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div>
+            </div>
+            <div class="comment-block">
+                <p class="comment-text">{{ comment.content }}</p>
+                <div class="bottom-comment">
+                    <div class="comment-date">{{ comment.dateCreated ? comment.dateCreated|date('Y-m-d H:i:s') : ''  }}</div>
+                    <ul class="comment-actions">
+                        <li>{{ comment.user.username }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div>No comments.</div>
+    {% endfor %}
+
+
+    {% if last_id != '0' %}
+        <div id="moreComments{{ last_id }}" class="morebox">
+            <a href="#" class="btn btn-primary more_comments" id="{{ last_id }}" data-path="{{ path('load_more_comments') }}" data-trick-id="{{ trick.id }}" data-loader-gif="<img src='{{ asset('img/loader.gif') }}' />">more</a>
+        </div>
+    {% endif %}

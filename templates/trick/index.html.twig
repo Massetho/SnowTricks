@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <link href="{{ asset('bootstrap/css/customModal.css') }}" rel="stylesheet">
+ {% endblock %}
+
+{% block title %}Trick index{% endblock %}
+
+{% block body %}
+
+    {{ include('trick/slide.html.twig', {  }) }}
+
+    <div class="container" id="tricks">
+        <div class="row">
+            <div id="tricks-thumbs" class="trick-container vignette-container">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="col-lg-2 col-md-2 col-6 trick-vignette">
+                        <div class="card">
+                            <a href="{{ path('trick_new') }}" class="items-sm">
+                                <img class="card-img-top trick-vignette-img new-trick-pic" src="{{ asset('img/trick/create.svg') }}">
+                            </a>
+                            <a href="javascript:void(0);" data-href="{{ path('trick_new', {'modal':1}) }}" class="openModal items-lg">
+                                <img class="card-img-top trick-vignette-img new-trick-pic" src="{{ asset('img/trick/create.svg') }}">
+                            </a>
+                            <div class="card-body flex-content">
+                                <div>
+                                    <a href="{{ path('trick_new') }}" class="items-sm"><h5 class="card-title">New Trick</h5></a>
+                                    <a href="javascript:void(0);" data-href="{{ path('trick_new', {'modal':1}) }}" class="openModal items-lg"><h5 class="card-title">New Trick</h5></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                {% endif %}
+                {{ include('trick/tricks_thumbs.html.twig') }}
+
+
+                </div>
+
+            <div class="modal fade bd-example-modal-lg" id="trickModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body trick-modal-body"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row marginTop30">
+            <div id="more{{ last_id }}" class="morebox">
+                <a href="#" class="btn btn-primary more_tricks" id="{{ last_id }}" data-path="{{ path('load_more_tricks') }}" data-loader-gif="<img src='{{ asset('img/loader.gif') }}' />">Load more</a>
+            </div>
+        </div>
+
+        <a href="#top" class="btn btn-circle js-scroll-trigger bottom-to-top">
+            <span class="oi oi-chevron-top"></span>
+        </a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/trickModal.js') }}"></script>
+    <script src="{{ asset('js/trickMoreBox.js') }}"></script>
+
+{% endblock %}
