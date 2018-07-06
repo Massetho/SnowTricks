@@ -16,6 +16,9 @@ use App\Entity\Video;
 class VideoListener extends AbstractEntityListener
 {
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
 
@@ -28,6 +31,9 @@ class VideoListener extends AbstractEntityListener
         $this->setDateCreated($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();

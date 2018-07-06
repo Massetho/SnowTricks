@@ -17,6 +17,10 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class MailType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

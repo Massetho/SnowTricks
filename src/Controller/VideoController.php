@@ -21,7 +21,9 @@ class VideoController extends Controller
 {
 
     /**
-     * @Route("/video/{id}", name="video_delete", methods="DELETE")
+     * @Route("/video/{id}",
+     *     name="video_delete",
+     *     methods="DELETE")
      */
     public function delete(Request $request, Video $video): Response
     {

@@ -18,18 +18,9 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 class TrickListener extends AbstractEntityListener
 {
 
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if (!$entity instanceof Trick) {
-            return;
-        }
-
-        //$this->makeCollections($entity);
-
-    }
-
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
 
@@ -42,6 +33,9 @@ class TrickListener extends AbstractEntityListener
         $this->setDateCreated($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -51,29 +45,6 @@ class TrickListener extends AbstractEntityListener
         }
 
         $this->setDateUpdated($entity);
-    }
-
-    /**
-     * Making sure my trick entity has 3 images and videos.
-     *
-     * @param Trick $trick
-     */
-    public function makeCollections(Trick $trick)
-    {
-        $imageNbr = $trick->getImages()->count();
-        $videoNbr = $trick->getVideos()->count();
-
-        $nbrCreate = 3 - $imageNbr;
-        for($i = 0 ; $i < $nbrCreate ; $i++) {
-            $child = new Image(); // instantiate a new child entity
-            $trick->addImage($child); // add this instance to the parent entity
-        }
-
-        $nbrCreate = 3 - $videoNbr;
-        for($i = 0 ; $i < $nbrCreate ; $i++) {
-            $child = new Video(); // instantiate a new child entity
-            $trick->addVideo($child); // add this instance to the parent entity
-        }
     }
 
 }

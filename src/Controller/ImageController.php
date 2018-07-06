@@ -25,10 +25,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ImageController extends Controller
 {
-
-
     /**
-     * @Route("/image/{id}", name="image_delete", methods="DELETE")
+     * @param Request $request
+     * @param Image $image
+     *
+     * @Route("/image/{id}",
+     *     name="image_delete",
+     *     methods="DELETE")
+     *
+     * @return Response
      */
     public function delete(Request $request,
                            Image $image): Response

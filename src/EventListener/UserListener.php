@@ -16,6 +16,9 @@ use App\Entity\User;
 class UserListener extends AbstractEntityListener
 {
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
 

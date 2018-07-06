@@ -50,7 +50,6 @@ class RegistrationController extends Controller
             $entityManager->flush();
 
             // send them an email
-
             //Make message
             $url = $this->generateUrl(
                 'mail_confirmation',
@@ -64,20 +63,6 @@ class RegistrationController extends Controller
             $mailer->sendMail($subject, $content, $user->getUsername(), $user->getEmail());
 
             $this->addFlash('success', 'Confirmation email has been sent. Thank you !');
-            /*$APIkey = $this->container->getParameter('sendgrid.key');
-            $adminMail = $this->container->getParameter('admin.mail');
-            $from = new SendGrid\Email("Blogpro", $adminMail);
-            $subject = "Confirm your email address";
-            $to = $user->getUsername();
-            $to = new SendGrid\Email($to, $user->getEmail());
-
-            $content = new SendGrid\Content("text/html", $content);
-            $mail = new SendGrid\Mail($from, $subject, $to, $content);
-
-            $sg = new \SendGrid($APIkey);
-            $sg->client->mail()->send()->post($mail); */
-
-            // set a "flash" success message for the user
         }
 
         return $this->render(
@@ -96,6 +81,7 @@ class RegistrationController extends Controller
      *     methods="GET",
      *     requirements={"id"="\d+"})
      *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
     public function confirmMail(User $user,

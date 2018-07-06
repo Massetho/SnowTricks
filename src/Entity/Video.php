@@ -234,6 +234,9 @@ class Video
 
     }
 
+    /**
+     * @return string
+     */
     private function url()
     {
         $control = $this->getType();  // on récupère le type de la vidéo
@@ -256,6 +259,9 @@ class Video
         }
     }
 
+    /**
+     *
+     */
     public function recomposeUrl()
     {
         $control = $this->getType();  // on récupère le type de la vidéo

@@ -28,9 +28,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class LoginController extends Controller
 {
     /**
+     * @param AuthenticationUtils $authenticationUtils
+     *
      * @Route("/login", name="login")
+     *
+     * @return Response
      */
-    public function LoginAction(Request $request, AuthenticationUtils $authenticationUtils)
+    public function LoginAction(AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -45,9 +49,16 @@ class LoginController extends Controller
     }
 
     /**
+     * @param UserRepository $userRepository
+     * @param Request $request
+     * @param Mailer $mailer
+     *
      * @Route("/forgot_password",
      *     name="forgot_password",
      *     methods="GET|POST")
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function forgotPassword(UserRepository $userRepository,
                              Request $request,
@@ -103,6 +114,8 @@ class LoginController extends Controller
      * @param User $user
      * @param string $token
      * @param TokenRepository $tokenRepository
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
      *
      * @Route("/password_reset/{id}/{token}",
      *     name="password_reset",
@@ -110,6 +123,7 @@ class LoginController extends Controller
      *     requirements={"id"="\d+"})
      *
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function passwordReset(User $user,
                                 $token,

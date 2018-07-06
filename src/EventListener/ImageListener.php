@@ -16,7 +16,9 @@ use App\Entity\TopImage;
 
 class ImageListener extends AbstractEntityListener
 {
-
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
 
@@ -29,6 +31,9 @@ class ImageListener extends AbstractEntityListener
         $this->setDateCreated($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();

@@ -15,7 +15,9 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class CommentListener extends AbstractEntityListener
 {
-
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
 

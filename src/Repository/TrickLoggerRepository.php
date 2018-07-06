@@ -14,6 +14,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TrickLoggerRepository extends ServiceEntityRepository
 {
+    /**
+     * TrickLoggerRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, TrickLogger::class);

@@ -21,16 +21,30 @@ use App\Service\ImagePath;
 
 class ImageUploadListener
 {
+    /**
+     * @var ImageUploader
+     */
     private $uploader;
 
+    /**
+     * @var ImagePath
+     */
     private $pathMaker;
 
+    /**
+     * ImageUploadListener constructor.
+     * @param ImageUploader $uploader
+     * @param ImagePath $pathMaker
+     */
     public function __construct(ImageUploader $uploader, ImagePath $pathMaker)
     {
         $this->uploader = $uploader;
         $this->pathMaker = $pathMaker;
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -46,6 +60,9 @@ class ImageUploadListener
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -53,6 +70,9 @@ class ImageUploadListener
         $this->uploadFile($entity);
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function preRemove(LifecycleEventArgs  $args)
     {
         $entity = $args->getEntity();
@@ -60,6 +80,9 @@ class ImageUploadListener
         $this->removeFile($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -109,6 +132,9 @@ class ImageUploadListener
 
     }
 
+    /**
+     * @param $entity
+     */
     private function uploadFile($entity)
     {
         // upload only works for Image entities
@@ -125,6 +151,9 @@ class ImageUploadListener
         }
     }
 
+    /**
+     * @param $entity
+     */
     private function removeFile($entity)
     {
         if (!$entity instanceof Image) {

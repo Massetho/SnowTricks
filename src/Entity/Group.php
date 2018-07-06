@@ -46,6 +46,9 @@ class Group
 
     //FUNCTIONS
 
+    /**
+     * Group constructor.
+     */
     public function __construct()
     {
         $this->tricks = new ArrayCollection();

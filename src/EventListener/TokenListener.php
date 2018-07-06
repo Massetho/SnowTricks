@@ -16,6 +16,9 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 class TokenListener extends AbstractEntityListener
 {
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
 
