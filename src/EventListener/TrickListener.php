@@ -9,9 +9,7 @@
 
 namespace App\EventListener;
 
-use App\Entity\Image;
 use App\Entity\Trick;
-use App\Entity\Video;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
@@ -45,6 +43,20 @@ class TrickListener extends AbstractEntityListener
         }
 
         $this->setDateUpdated($entity);
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Trick) {
+            return;
+        }
+
+        $entity->setURLSlug();
     }
 
 }

@@ -206,22 +206,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return integer
-     */
-    public function getRegistered()
-    {
-        return $this->registered;
-    }
-
-    /**
-     * @param integer $registered
-     */
-    public function setRegistered($registered)
-    {
-        $this->registered = $registered;
-    }
-
-    /**
      * @return Collection|TrickLogger[]
      */
     public function getTrickLoggers()

@@ -22,7 +22,9 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, array(
+                'attr' => array('rows' => '15'),
+            ))
             ->add('groups', EntityType::class, array(
                 'class'        => 'App\Entity\Group',
                 'choice_label' => 'name',

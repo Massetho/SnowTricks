@@ -79,8 +79,12 @@ class TrickController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
             $em->flush();
+            $this->addFlash('success', 'Trick has been created successfully.');
 
-            return $this->redirectToRoute('trick_index');
+            if ($modal == 1)
+                return new Response();
+            else
+                return $this->redirectToRoute('trick_index');
         }
 
         return $this->render('trick/new.html.twig', [
@@ -94,7 +98,7 @@ class TrickController extends Controller
      * @param Trick $trick
      * @param Request $request
      * @param $modal
-     * @Route("/trick/{id}/{modal}",
+     * @Route("/trick/{id}/{modal}/{slug}",
      *     name="trick_show",
      *     methods={"GET","POST"},
      *     defaults={"modal": "0"},
@@ -179,6 +183,11 @@ class TrickController extends Controller
 
             $this->addFlash('success', 'Trick has been updated.');
 
+            if ($modal == 1)
+                return new Response();
+            else
+                return $this->redirectToRoute('trick_index');
+
         }
 
         return $this->render( 'trick/edit.html.twig', [
@@ -190,7 +199,7 @@ class TrickController extends Controller
 
     /**
      * @param Request $request
-     * @pâram Trick $trick
+     * @param Trick $trick
      * @Route("/trick/{id}",
      *     name="trick_delete",
      *     methods="DELETE")
@@ -220,7 +229,10 @@ class TrickController extends Controller
     {
         $x = $request->get('last_id');
         $tricks = $trickRepository->getMoreItems($x);
-        $lastId = $this->getLastItemId($tricks);
+        $lastId = 0;
+
+        if (!empty($tricks))
+            $lastId = $this->getLastItemId($tricks);
 
         return $this->render('trick/tricks_thumbs.html.twig',
             array('tricks' => $tricks,

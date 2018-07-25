@@ -99,6 +99,11 @@ class Trick
      */
     private $comments;
 
+    /**
+     * @var string $slug
+     */
+    private $slug;
+
     //FONCTIONS
 
     public function __construct()
@@ -257,6 +262,22 @@ class Trick
         $this->dateUpdated = $dateUpdated;
     }
 
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
     //ADDERS
 
     /**
@@ -394,6 +415,20 @@ class Trick
     }
 
     //OTHER FUNCTIONS
+
+    /**
+     * URL slug generator.
+     */
+    public function setURLSlug()
+    {
+        if (!$this->getName()) {
+            return;
+        }
+
+        $slug = str_replace(" ", "-", $this->getName());
+
+        $this->setSlug(rawurlencode($slug));
+    }
 
 
 

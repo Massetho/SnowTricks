@@ -22,6 +22,7 @@ class EditTrickType extends AbstractType
     {
         $builder
             ->add('description', TextareaType::class, array(
+                'attr' => array('rows' => '15'),
                 'label'        => false,
             ))
             ->add('groups', EntityType::class, array(
