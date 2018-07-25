@@ -11,13 +11,8 @@
                 processData: false,
                 contentType: false,
 
-                /*dataType: 'json',
-                headers: {
-                    'Content-Type': 'application/json'
-                },*/
-
-                success: function (response) {
-                    $('.trick-modal-body').html(response);
+                success: function () {
+                    window.location.href='/';
                 },
                 error: function (response) {
                     console.log(response);

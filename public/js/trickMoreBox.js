@@ -1,25 +1,28 @@
 $(document).ready(function(){
-    $('body').on('click', '.more_tricks', function (){
-        var ID = $(this).attr("id");
+    $('body').on('click', '.more_tricks', function (e){
+        e.preventDefault();
+        var ID = $(".trick-vignette:last-child").attr("data-trick-id");
         var loaderGif = $(this).attr("data-loader-gif");
         var path = $(this).attr("data-path");
         if(ID) {
-            $("#more"+ID).html(loaderGif);
-
             $.ajax({
                 type: 'GET',
                 url: path,
                 data: { last_id: ID },
+                beforeSend:function(){
+                    $(".more_tricks").hide();
+                    $("#more").append(loaderGif);
+                },
                 success: function (response) {
 
                     $('#tricks-thumbs').append(response);
-                    $("#more"+ID).remove();
+
+                    $("#more img").remove();
+                    $(".more_tricks").show();
                 }
             });
         } else {
-            $(".morebox").html('The End');// no results
+            $(".morebox").html('No more tricks.');//
         }
-
-        return false;
     });
 });

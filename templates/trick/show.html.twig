@@ -10,7 +10,7 @@
                 <img src="{{ asset(trick.topImage.webPath|default('img/trick/default.jpg')) }}">
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="edit-links edit-links-absolute">
-                        <a href="{{ path('trick_edit', {'id': trick.id}) }}"><span class="oi oi-pencil" title="pencil" aria-hidden="true"></a>
+                        <a href="{{ path('trick_edit', {'id': trick.id}) }}"><span class="oi oi-pencil" title="pencil" aria-hidden="true"></span></a>
 
                         {{ include('trick/_delete_form.html.twig') }}
                     </div>
@@ -87,7 +87,7 @@
     {{ parent() }}
 
     {% if modal == 1 %}
-        {{ include('trick/comment.form.ajax.html.twig', {submitPath: path('trick_show', {'id': trick.id, 'modal': modal})}) }}
+        {{ include('trick/comment.form.ajax.html.twig', {submitPath: path('trick_show', {'id': trick.id, 'modal': modal, 'slug': trick.slug})}) }}
     {% else %}
 
     {% endif %}

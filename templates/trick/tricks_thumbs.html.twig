@@ -1,17 +1,17 @@
 {% for trick in tricks %}
 
-    <div class="col-lg-2 col-md-2 col-6 trick-vignette">
+    <div class="col-lg-2 col-md-2 col-6 trick-vignette" data-trick-id="{{ trick.id }}">
         <div class="card">
-            <a href="{{ path('trick_show', {'id': trick.id}) }}" class="items-sm">
+            <a href="{{ path('trick_show', {'id': trick.id, 'slug': trick.slug}) }}" class="items-sm">
                 <img class="card-img-top trick-vignette-img" src="{{ asset(trick.topImage.webPath|default('img/trick/default.jpg')) }}">
             </a>
-            <a href="javascript:void(0);" data-href="{{ path('trick_show', {'id': trick.id, 'modal':1}) }}" class="openModal items-lg">
+            <a href="javascript:void(0);" data-href="{{ path('trick_show', {'id': trick.id, 'modal':1, 'slug': trick.slug}) }}" class="openModal items-lg">
                 <img class="card-img-top trick-vignette-img" src="{{ asset(trick.topImage.webPath|default('img/trick/default.jpg')) }}">
             </a>
         <div class="card-body flex-content">
             <div>
-                <a href="{{ path('trick_show', {'id': trick.id}) }}" class="items-sm"><h5 class="card-title">{{ trick.name }}</h5></a>
-                <a href="javascript:void(0);" data-href="{{ path('trick_show', {'id': trick.id, 'modal': 1}) }}" class="openModal items-lg"><h5 class="card-title">{{ trick.name }}</h5></a>
+                <a href="{{ path('trick_show', {'id': trick.id, 'slug': trick.slug}) }}" class="items-sm"><h5 class="card-title">{{ trick.name }}</h5></a>
+                <a href="javascript:void(0);" data-href="{{ path('trick_show', {'id': trick.id, 'modal': 1, 'slug': trick.slug}) }}" class="openModal items-lg"><h5 class="card-title">{{ trick.name }}</h5></a>
             </div>
 
 
@@ -37,5 +37,6 @@
 {% else %}
     <div>no records found</div>
 {% endfor %}
+
 
 
