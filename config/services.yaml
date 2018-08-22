@@ -7,6 +7,8 @@ parameters:
     image_trick_directory: '%kernel.project_dir%/public/img/trick/'
     # image_trick_directory: 'img/trick/'
     image_directory: 'img/'
+    sendgrid.key: "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"
+    admin.mail: 'quentin.thomasset@gmail.com'
 
 services:
     # default configuration for services in *this* file
@@ -48,6 +50,13 @@ services:
         arguments:
             $targetDirectory: '%image_directory%'
 
+    App\Service\Mailer:
+        class: App\Service\Mailer
+        arguments:
+            $sendgridKey: '%sendgrid.key%'
+            $adminMail: '%admin.mail%'
+
+
     App\Service\ImageUploader:
         arguments:
             $targetDirectory: '%image_trick_directory%'
@@ -67,9 +76,22 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
 
     App\EventListener\TrickListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postLoad }
+
+    App\EventListener\UserListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    App\EventListener\CommentListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    App\EventListener\TokenListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
