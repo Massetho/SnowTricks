@@ -28,6 +28,7 @@ class Image
     private $id;
 
     /**
+     * @var \DateTime $dateCreated
      * @ORM\Column(type="datetime", name="date_created")
      */
     private $dateCreated;
@@ -44,6 +45,11 @@ class Image
      * @var string
      */
     private $path;
+
+    /**
+     * @var string
+     */
+    private $webPath;
 
     //RELATIONSHIPS
 
@@ -124,14 +130,37 @@ class Image
         $this->trick = $trick;
     }
 
+    /**
+     * @param string $path
+     */
     public function setPath(string $path)
     {
         $this->path = $path;
     }
 
+    /**
+     * @return string
+     */
     public function getPath()
     {
         return $this->path;
     }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->webPath;
+    }
+
+    /**
+     * @param string $webPath
+     */
+    public function setWebPath($webPath)
+    {
+        $this->webPath = $webPath;
+    }
+
 
 }

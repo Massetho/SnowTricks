@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
-use App\Service\HomeImage;
+use App\Service\ImagePath;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,12 +33,13 @@ class TrickController extends AbstractController
     /**
      * @Route("/", name="trick_index", methods="GET")
      * @param TrickRepository $trickRepository
-     * @param HomeImage $homeImage
+     * @param ImagePath $homeImage
      * @return Response
      */
     public function index(TrickRepository $trickRepository,
-                          HomeImage $homeImage): Response
+                          ImagePath $homeImage): Response
     {
+
         return $this->render('trick/index.html.twig',
             ['tricks' => $trickRepository->findAll(),
                 'homeImage' => $homeImage->getHomeImage()]);
@@ -49,8 +52,8 @@ class TrickController extends AbstractController
     {
         //$trick = $this->trick;
         $trick = new Trick();
-        $image = new Image();
-        $trick->addImage($image);
+        //$image = new Image();
+        //$trick->addImage($image);
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -71,11 +74,29 @@ class TrickController extends AbstractController
     }
 
     /**
+     * @param Trick $trick
+     * @param Request $request
      * @Route("/trick/{id}", name="trick_show", methods="GET")
+     * @return Response
      */
-    public function show(Trick $trick): Response
+    public function show(Trick $trick,
+                         Request $request): Response
     {
-        return $this->render('trick/show.html.twig', ['trick' => $trick]);
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $trick->addComment($comment);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($trick);
+            $em->flush();
+        }
+
+        return $this->render('trick/show.html.twig', ['trick' => $trick,
+            'commentForm' => $form->createView()]);
     }
 
     /**
