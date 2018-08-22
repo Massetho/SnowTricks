@@ -26,10 +26,11 @@ class RegistrationController extends Controller
     /**
      * @Route("/register", name="user_registration")
      */
-    public function register(Request $request,
+    public function register(
+        Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
-                             Mailer $mailer)
-    {
+                             Mailer $mailer
+    ) {
         // 1) build the form
         $token = new Token();
         $user = new User();
@@ -84,21 +85,30 @@ class RegistrationController extends Controller
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function confirmMail(User $user,
+    public function confirmMail(
+        User $user,
                                 $token,
-                                TokenRepository $tokenRepository)
-    {
+                                TokenRepository $tokenRepository
+    ) {
+        /*
+         * Get Token matching user & code
+         * If not found, throw exception
+         */
         $token = $tokenRepository->getMailConfirmationToken($user, $token);
         if (!$token) {
             throw $this->createNotFoundException(
                 'Invalid token'
             );
-        }
-        else {
+        } else {
+            /*
+             * Checking token expiration
+             */
             if (!$token->isValidToken()) {
                 $msg = 'Error : Token has expired. Please try again.';
-            }
-            else {
+            } else {
+                /*
+                 * If token is valid, add new User role.
+                 */
                 $user->addRole('ROLE_ADMIN');
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
@@ -112,6 +122,5 @@ class RegistrationController extends Controller
             'admin/mail_confirm.html.twig',
             array('message' => $msg)
         );
-
     }
 }

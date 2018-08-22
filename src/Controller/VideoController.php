@@ -37,5 +37,4 @@ class VideoController extends Controller
 
         return $this->redirectToRoute('trick_show', ['id' => $video->getTrick()->getId()]);
     }
-
 }

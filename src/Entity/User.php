@@ -271,12 +271,12 @@ class User implements UserInterface, \Serializable
      */
     public function addRole($role)
     {
-        if(!is_array($this->getRoles())) {
+        if (!is_array($this->getRoles())) {
             $this->roles[] = $role;
-        }
-        else {
-            if (!in_array($role, $this->getRoles()))
+        } else {
+            if (!in_array($role, $this->getRoles())) {
                 $this->roles[] = $role;
+            }
         }
     }
 
@@ -309,7 +309,7 @@ class User implements UserInterface, \Serializable
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->id,
             $this->username,
             $this->password

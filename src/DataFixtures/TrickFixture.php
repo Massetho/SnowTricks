@@ -8,6 +8,7 @@
  */
 
 namespace App\DataFixtures;
+
 use App\Entity\Group;
 use App\DataFixtures\GroupFixture;
 use App\Entity\Image;
@@ -36,16 +37,18 @@ class TrickFixture extends Fixture implements DependentFixtureInterface
     {
         $this->targetDirectory = $targetDirectory;
         $dir = $this->targetDirectory . '*.{jpg,jpeg}';
-        $this->imgDir = glob($dir,GLOB_BRACE);
+        $this->imgDir = glob($dir, GLOB_BRACE);
 
-        if ($key = array_search($this->targetDirectory.'default.jpg', $this->imgDir))
+        if ($key = array_search($this->targetDirectory.'default.jpg', $this->imgDir)) {
             unset($this->imgDir[$key]);
+        }
     }
 
     public function load(ObjectManager $manager)
     {
-        if(empty($this->imgDir))
+        if (empty($this->imgDir)) {
             return;
+        }
 
         $groups = $manager->getRepository(Group::class)->findAll();
 
@@ -101,14 +104,12 @@ class TrickFixture extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-
-
     }
 
     public function getImages()
     {
         $images = array();
-        $j = rand(1,3);
+        $j = rand(1, 3);
         for ($i = 1; $i <= $j; $i++) {
             $image = new Image();
             $key = array_rand($this->imgDir);

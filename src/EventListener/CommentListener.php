@@ -20,7 +20,6 @@ class CommentListener extends AbstractEntityListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Comment) {
@@ -29,5 +28,4 @@ class CommentListener extends AbstractEntityListener
 
         $this->setDateCreated($entity);
     }
-
 }

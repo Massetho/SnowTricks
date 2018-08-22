@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
 class TrickController extends Controller
 {
     /**
@@ -41,17 +40,23 @@ class TrickController extends Controller
      * @param ImagePath $homeImage
      * @return Response
      */
-    public function index(TrickRepository $trickRepository,
-                          ImagePath $homeImage): Response
+    public function index(TrickRepository $trickRepository): Response
     {
+        /*
+         * Get last registered tricks to show on front page.
+         * Sending last Id var for load more ajax request.
+         */
         $tricks = $trickRepository->getLastItems();
         $lastId = false;
-        if (!empty($tricks))
+        if (!empty($tricks)) {
             $lastId = $this->getLastItemId($tricks);
+        }
 
-        return $this->render('trick/index.html.twig',
+        return $this->render(
+            'trick/index.html.twig',
             ['tricks' => $tricks,
-                'last_id' => $lastId]);
+                'last_id' => $lastId]
+        );
     }
 
     /**
@@ -75,16 +80,16 @@ class TrickController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
             $em->flush();
             $this->addFlash('success', 'Trick has been created successfully.');
 
-            if ($modal == 1)
+            if ($modal == 1) {
                 return new Response();
-            else
+            } else {
                 return $this->redirectToRoute('trick_index');
+            }
         }
 
         return $this->render('trick/new.html.twig', [
@@ -105,14 +110,16 @@ class TrickController extends Controller
      *     requirements={"id" :"\d+", "modal":"1|0"})
      * @return Response
      */
-    public function show(Trick $trick,
+    public function show(
+        Trick $trick,
                          $modal,
-                         Request $request): Response
-    {
-
+                         Request $request
+    ): Response {
+        //getting top image and other images separately.
         $topImage = $trick->getTopImage();
         $images = $trick->getBottomImages();
 
+        //Creating and managing Comment form
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment, array(
             'attr' => array(
@@ -131,12 +138,14 @@ class TrickController extends Controller
             $em->flush();
         }
 
+        //Construct criteria for comments display.
         $criteria = CommentRepository::commentsCriteria($trick);
         $comments = $trick->getComments()->matching($criteria);
 
         $lastId = false;
-        if (!$comments->isEmpty())
+        if (!$comments->isEmpty()) {
             $lastId = $this->getLastItemId($comments->toArray());
+        }
 
         return $this->render('trick/show.html.twig', ['trick' => $trick,
             'modal' => $modal,
@@ -162,9 +171,11 @@ class TrickController extends Controller
     public function edit(Request $request, Trick $trick, $modal): Response
     {
         $images = $trick->getImages()->toArray();
-        if (is_array($images))
+        if (is_array($images)) {
             array_shift($images);
+        }
 
+        //Create Edit Trick form.
         $form = $this->createForm(EditTrickType::class, $trick, array(
             'attr' => array(
                 'id' => 'trickFormEdit'
@@ -173,6 +184,8 @@ class TrickController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //Managing bottom images
             if ($form->has('bottomImages')) {
                 foreach ($form->get('bottomImages') as $formBI) {
                     $image = $formBI->getData();
@@ -183,14 +196,15 @@ class TrickController extends Controller
 
             $this->addFlash('success', 'Trick has been updated.');
 
-            if ($modal == 1)
+            //Adapting display for small or big screen
+            if ($modal == 1) {
                 return new Response();
-            else
+            } else {
                 return $this->redirectToRoute('trick_index');
-
+            }
         }
 
-        return $this->render( 'trick/edit.html.twig', [
+        return $this->render('trick/edit.html.twig', [
             'modal' => $modal,
             'trick' => $trick,
             'form' => $form->createView(),
@@ -224,22 +238,31 @@ class TrickController extends Controller
      *     methods="GET")
      * @return Response
      */
-    public function loadMoreTricks(TrickRepository $trickRepository,
-                                   Request $request)
-    {
+    public function loadMoreTricks(
+        TrickRepository $trickRepository,
+                                   Request $request
+    ) {
+        /*
+         * Getting last item id from request
+         * Get a new tricks collection from repository
+         */
         $x = $request->get('last_id');
         $tricks = $trickRepository->getMoreItems($x);
         $lastId = 0;
 
-        if (!empty($tricks))
+        if (!empty($tricks)) {
             $lastId = $this->getLastItemId($tricks);
+        }
 
-        return $this->render('trick/tricks_thumbs.html.twig',
+        return $this->render(
+            'trick/tricks_thumbs.html.twig',
             array('tricks' => $tricks,
-                'last_id' => $lastId));
+                'last_id' => $lastId)
+        );
     }
 
     /**
+     * This function returns the last item's id of an object collection
      * @param array $array
      * @return int
      */
@@ -258,6 +281,9 @@ class TrickController extends Controller
     public function loadMoreComments(Request $request)
     {
 
+        /*
+         * Get trick_id and last comment'id from Request
+         */
         $trickId = $request->get('trick_id');
         $commentId = $request->get('last_id');
 
@@ -265,22 +291,30 @@ class TrickController extends Controller
             ->getRepository(Trick::class)
             ->find($trickId);
 
-
+        /*
+         * If no trick is found, throw exception
+         */
         if (!isset($trickId) || !isset($commentId) || !isset($trick)) {
             throw $this->createNotFoundException(
                 'Invalid argument.'
             );
         }
 
+        /*
+         * Make a Criteria with the infos and recover next matching comments
+         */
         $criteria = CommentRepository::commentsCriteria($trick, $commentId);
         $comments = $trick->getComments()->matching($criteria);
         $lastId = 0;
 
-        if (!$comments->isEmpty())
+        if (!$comments->isEmpty()) {
             $lastId = $this->getLastItemId($comments->toArray());
+        }
 
-        return $this->render('trick/comments.html.twig',
+        return $this->render(
+            'trick/comments.html.twig',
             array('comments' => $comments,
-                'last_id' => $lastId));
+                'last_id' => $lastId)
+        );
     }
 }

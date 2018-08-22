@@ -20,7 +20,6 @@ class GroupFixture extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-
         $groupNames = array('grab',
             'rotation',
             'rotation désaxée',

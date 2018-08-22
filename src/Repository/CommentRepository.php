@@ -41,7 +41,7 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('trick_id', $trickId)
             ->setParameter('lastId', $lastId)
             ->orderBy('c.id', 'DESC')
-            ->setMaxResults( 5 );
+            ->setMaxResults(5);
 
         return $qb
             ->getQuery()

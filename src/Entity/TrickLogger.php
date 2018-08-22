@@ -130,5 +130,4 @@ class TrickLogger
     {
         $this->trick = $trick;
     }
-
 }

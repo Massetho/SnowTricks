@@ -134,5 +134,4 @@ class Token
 
         return ($now >= $expirationTime) ? false : true;
     }
-
 }

@@ -226,10 +226,11 @@ class Trick
      */
     public function getTopImage() : Image
     {
-        if (!$this->getImages()->isEmpty())
+        if (!$this->getImages()->isEmpty()) {
             $topImage = $this->getImages()->first();
-        else
+        } else {
             $topImage = new Image();
+        }
         return $topImage;
     }
 
@@ -313,9 +314,9 @@ class Trick
         if ($firstKey) {
             $image->setTrick($this);
             $this->images->set($image, $firstKey);
-        }
-        else
+        } else {
             $this->addImage($image);
+        }
 
         return $this;
     }
@@ -326,8 +327,9 @@ class Trick
      */
     public function addBottomImages($image)
     {
-        if ($image instanceof Image)
+        if ($image instanceof Image) {
             $this->addImage($image);
+        }
 
         return $this;
     }
@@ -429,7 +431,4 @@ class Trick
 
         $this->setSlug(rawurlencode($slug));
     }
-
-
-
 }

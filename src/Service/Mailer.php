@@ -43,11 +43,12 @@ class Mailer
      * @param string $targetName
      * @param string $targetMail
      */
-    public function sendMail($subject,
+    public function sendMail(
+        $subject,
                              $content,
                              $targetName,
-                             $targetMail)
-    {
+                             $targetMail
+    ) {
         $from = new SendGrid\Email("Blogpro", $this->adminMail);
         $to = $targetName;
         $to = new SendGrid\Email($to, $targetMail);

@@ -161,6 +161,4 @@ class Image
     {
         $this->webPath = $webPath;
     }
-
-
 }

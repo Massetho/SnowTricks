@@ -28,5 +28,4 @@ class AbstractEntityListener
         $date = new \DateTime();
         $entity->setDateUpdated($date);
     }
-
 }

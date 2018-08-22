@@ -21,7 +21,6 @@ class UserListener extends AbstractEntityListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof User) {
@@ -30,5 +29,4 @@ class UserListener extends AbstractEntityListener
 
         $this->setDateCreated($entity);
     }
-
 }

@@ -32,7 +32,7 @@ class TrickRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('t');
 
         $qb->orderBy('t.id', 'DESC')
-            ->setMaxResults( 12 );
+            ->setMaxResults(12);
 
         return $qb
             ->getQuery()
@@ -50,7 +50,7 @@ class TrickRepository extends ServiceEntityRepository
         $qb->where('t.id < :lastId')
             ->setParameter('lastId', $lastId)
             ->orderBy('t.id', 'DESC')
-            ->setMaxResults( 6 );
+            ->setMaxResults(6);
 
         return $qb
             ->getQuery()

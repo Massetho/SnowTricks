@@ -9,7 +9,6 @@
 
 namespace App\EventListener;
 
-
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -100,7 +99,7 @@ class ImageUploadListener
         $previousFilename = null;
 
         // Verify if the file field was changed
-        if(array_key_exists("file", $changes)){
+        if (array_key_exists("file", $changes)) {
             // Update previous file name
             $previousFilename = $changes["file"][0];
 
@@ -110,18 +109,18 @@ class ImageUploadListener
         }
 
         // If no new brochure file was uploaded
-        if(is_null($entity->getFile()) || ($same === 1)){
+        if (is_null($entity->getFile()) || ($same === 1)) {
             // Let original filename in the entity
             $entity->setFile($previousFilename);
 
-            // If a new brochure was uploaded in the form
-        }else{
+        // If a new brochure was uploaded in the form
+        } else {
             // If some previous file exist
-            if(!is_null($previousFilename)){
+            if (!is_null($previousFilename)) {
                 $pathPreviousFile = $this->uploader->getTargetDirectory().$previousFilename;
 
                 // Remove it
-                if(file_exists($pathPreviousFile)){
+                if (file_exists($pathPreviousFile)) {
                     unlink($pathPreviousFile);
                 }
             }
@@ -129,7 +128,6 @@ class ImageUploadListener
             // Upload new file
             $this->uploadFile($entity);
         }
-
     }
 
     /**
@@ -163,7 +161,5 @@ class ImageUploadListener
         if ($file = $entity->getPath()) {
             unlink($file);
         }
-
     }
-
 }

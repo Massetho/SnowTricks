@@ -21,7 +21,6 @@ class TokenListener extends AbstractEntityListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Token) {
@@ -30,5 +29,4 @@ class TokenListener extends AbstractEntityListener
         $entity->generate();
         $this->setDateCreated($entity);
     }
-
 }

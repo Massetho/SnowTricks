@@ -21,7 +21,6 @@ class TrickListener extends AbstractEntityListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Trick) {
@@ -58,5 +57,4 @@ class TrickListener extends AbstractEntityListener
 
         $entity->setURLSlug();
     }
-
 }

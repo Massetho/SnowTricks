@@ -21,7 +21,6 @@ class ImageListener extends AbstractEntityListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Image) {
@@ -44,5 +43,4 @@ class ImageListener extends AbstractEntityListener
 
         $this->setDateCreated($entity);
     }
-
 }

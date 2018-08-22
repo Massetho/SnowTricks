@@ -56,10 +56,17 @@ services:
             $sendgridKey: '%sendgrid.key%'
             $adminMail: '%admin.mail%'
 
-
     App\Service\ImageUploader:
         arguments:
             $targetDirectory: '%image_trick_directory%'
+
+    App\DataFixtures\TrickFixture:
+        arguments:
+            $targetDirectory: '%image_trick_directory%'
+
+    App\DataFixtures\UserFixture:
+        arguments:
+            $adminMail: '%admin.mail%'
 
     App\EventListener\ImageUploadListener:
         tags:

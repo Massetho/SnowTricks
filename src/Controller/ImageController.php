@@ -35,9 +35,10 @@ class ImageController extends Controller
      *
      * @return Response
      */
-    public function delete(Request $request,
-                           Image $image): Response
-    {
+    public function delete(
+        Request $request,
+                           Image $image
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
@@ -48,6 +49,4 @@ class ImageController extends Controller
 
         return $this->redirectToRoute('trick_show', ['id' => $image->getTrick()->getId()]);
     }
-
-
 }
