@@ -7,69 +7,131 @@
  * @time: 14:10
  */
 
-
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Dotenv\Dotenv;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
+ */
 class Image
 {
-    const IMG_PATH = 'img/';
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
     /**
-     * @var string $path
+     * @ORM\Column(type="datetime", name="date_created")
+     */
+    private $dateCreated;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Add a jpg picture")
+     * @Assert\File(mimeTypes={ "image/jpeg" })
+     */
+    private $file;
+
+    /**
+     * @var string
      */
     private $path;
 
+    //RELATIONSHIPS
+
     /**
      * @var Trick $trick
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
 
+
+    //FUNCTIONS
+    //GETTERS & SETTERS
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * @param string $dateCreated
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+    }
+
     /**
      * @return mixed
      */
-    public function getPath()
+    public function getFile()
     {
-        return $this->path;
+        return $this->file;
     }
 
     /**
-     * Setting image path based on Trick Id.
+     * @param mixed
+     * @return Image
      */
-    public function setPath()
+    public function setFile($file)
     {
-        $this->path = self::IMG_PATH .'trick/'. $this->getTrick()->getId();
+        $this->file = $file;
+
+        return $this;
     }
 
     /**
-     * getting image path for House.
+     * @return Trick
      */
-    public static function getHomeImage()
-    {
-        $path = self::IMG_PATH . 'home/*.{jpg,jpeg,gif,png}';
-        $images = glob($path, GLOB_BRACE);
-        $x = count($images);
-        if ($x > 1)
-            return $images[rand(0, $x-1)];
-        else
-            return $images[0];
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getTrick()
+    public function getTrick() : Trick
     {
         return $this->trick;
     }
 
     /**
-     * @param mixed $trick
+     * @param Trick $trick
      */
-    public function setTrick($trick)
+    public function setTrick(Trick $trick)
     {
         $this->trick = $trick;
     }
 
+    public function setPath(string $path)
+    {
+        $this->path = $path;
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
 
 }
