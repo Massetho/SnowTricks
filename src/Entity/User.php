@@ -1,11 +1,9 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 11/04/2018
- * @time: 15:04
+ * @description : User entity.
+ * @Author : Quentin Thomasset
  */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

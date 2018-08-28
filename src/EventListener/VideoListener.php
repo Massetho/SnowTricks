@@ -1,12 +1,8 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 04/05/2018
- * @time: 10:24
+ * @description : Video Listener
+ * @Author : Quentin Thomasset
  */
-
 namespace App\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;

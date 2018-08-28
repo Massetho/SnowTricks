@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @description : Managing Trick display and editing as well as comments.
+ * @Author : Quentin Thomasset
+ */
 namespace App\Controller;
 
 use App\Entity\Comment;
@@ -62,7 +65,7 @@ class TrickController extends Controller
     /**
      * @param Request $request
      * @param $modal
-     * @Route("/trick/new/{modal}",
+     * @Route("/admin/new/{modal}",
      *     name="trick_new",
      *     methods="GET|POST",
      *     defaults={"modal": "0"},

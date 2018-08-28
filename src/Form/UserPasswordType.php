@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 18/05/2018
- * @time: 16:56
+ * @description : Password form (for password reset)
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Form;

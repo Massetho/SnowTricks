@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 20/04/2018
- * @time: 14:10
+ * @description : Image entity.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Entity;

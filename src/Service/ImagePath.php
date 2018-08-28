@@ -1,12 +1,8 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 27/04/2018
- * @time: 15:40
+ * @description : Service for managing images path
+ * @Author : Quentin Thomasset
  */
-
 
 namespace App\Service;
 

@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 23/05/2018
- * @time: 16:20
+ * @description : Managing Videos.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Controller;

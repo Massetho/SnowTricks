@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 17/04/2018
- * @time: 10:26
+ * @description : Token repository
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Repository;

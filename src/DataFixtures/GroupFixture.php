@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 18/07/2018
- * @time: 11:49
+ * @description : Creating group fixtures
+ * @Author : Quentin Thomasset
  */
 
 namespace App\DataFixtures;

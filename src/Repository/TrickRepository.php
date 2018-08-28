@@ -1,11 +1,9 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 17/04/2018
- * @time: 10:20
+ * @description : Trick repository
+ * @Author : Quentin Thomasset
  */
+
 namespace App\Repository;
 
 use App\Entity\Trick;

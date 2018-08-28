@@ -1,4 +1,8 @@
 <?php
+/**
+ * @description : Edit trick form
+ * @Author : Quentin Thomasset
+ */
 
 namespace App\Form;
 

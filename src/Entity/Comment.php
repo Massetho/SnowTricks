@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 11/04/2018
- * @time: 16:32
+ * @description : Comment entity.
+ * @Author : Quentin Thomasset
  */
 namespace App\Entity;
 

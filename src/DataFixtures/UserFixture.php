@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 19/07/2018
- * @time: 15:55
+ * @description : Creating original user
+ * @Author : Quentin Thomasset
  */
 
 namespace App\DataFixtures;

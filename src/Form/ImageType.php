@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 27/04/2018
- * @time: 15:08
+ * @description : Image form
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Form;

@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 29/05/2018
- * @time: 16:55
+ * @description : Comment Listener
+ * @Author : Quentin Thomasset
  */
 
 namespace App\EventListener;

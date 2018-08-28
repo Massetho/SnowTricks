@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 04/05/2018
- * @time: 09:25
+ * @description : Abstract Entity Listener for shared functions
+ * @Author : Quentin Thomasset
  */
 
 namespace App\EventListener;

@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 14/05/2018
- * @time: 16:32
+ * @description : Managing registration and mail confirmation.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Controller;

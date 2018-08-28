@@ -1,12 +1,8 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 17/05/2018
- * @time: 14:58
+ * @description : Managing Login and password reset.
+ * @Author : Quentin Thomasset
  */
-
 namespace App\Controller;
 
 use App\Entity\User;

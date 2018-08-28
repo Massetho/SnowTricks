@@ -108,12 +108,12 @@ class ImageUploadListener
             }
         }
 
-        // If no new brochure file was uploaded
+        // If no new file was uploaded
         if (is_null($entity->getFile()) || ($same === 1)) {
             // Let original filename in the entity
             $entity->setFile($previousFilename);
 
-        // If a new brochure was uploaded in the form
+        // If a new file was uploaded in the form
         } else {
             // If some previous file exist
             if (!is_null($previousFilename)) {

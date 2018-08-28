@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 18/07/2018
- * @time: 12:21
+ * @description : Creating trick fixtures
+ * @Author : Quentin Thomasset
  */
 
 namespace App\DataFixtures;
