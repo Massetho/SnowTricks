@@ -7,8 +7,8 @@ parameters:
     image_trick_directory: '%kernel.project_dir%/public/img/trick/'
     # image_trick_directory: 'img/trick/'
     image_directory: 'img/'
-    sendgrid.key: "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"
-    admin.mail: 'quentin.thomasset@gmail.com'
+    sendgrid.key: '%env(resolve:SENDGRID_KEY)%'
+    admin.mail: '%env(resolve:ADMIN_MAIL)%'
 
 services:
     # default configuration for services in *this* file
