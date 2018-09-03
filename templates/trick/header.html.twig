@@ -23,9 +23,12 @@
                     <a class="nav-link items-lg" href="{{ path('login') }}">Sign in</a>
                 {% endif %}
             </li>
-            <li class="nav-item items-lg">
-                <a class="nav-link" href="{{ path('user_registration') }}">Sign up</a>
-            </li>
+            {% if not is_granted('ROLE_ADMIN') %}
+                <li class="nav-item items-lg">
+                    <a class="nav-link" href="{{ path('user_registration') }}">Sign up</a>
+                </li>
+            {% endif %}
+
         </ul>
         </div>
     </div>
@@ -43,8 +46,11 @@
                     <div><a class="nav-link items-sm" href="{{ path('login') }}">
                         <span class="oi oi-account-login" title="account-login" aria-hidden="true"></span></a></div>
                 {% endif %}
-                <div><a class="nav-link items-sm" href="{{ path('user_registration') }}">
-                    <span class="oi oi-bookmark" title="bookmark" aria-hidden="true"></span></a></div>
+                {% if not is_granted('ROLE_ADMIN') %}
+                    <div><a class="nav-link items-sm" href="{{ path('user_registration') }}">
+                            <span class="oi oi-bookmark" title="bookmark" aria-hidden="true"></span></a></div>
+                {% endif %}
+
         </div>
     </div>
 </nav>
