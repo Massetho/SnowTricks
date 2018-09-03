@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function() {
+        $('#commentForm').submit(function (e) {
+            e.preventDefault();
+            var $form = new FormData(this);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ submitPath }}",
+                data: $form,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    $('.trick-modal-body').html(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
+</script>

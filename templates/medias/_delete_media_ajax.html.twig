@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function() {
+        $('.deleteElement').click(function (e) {
+            e.preventDefault();
+            var token = $(this).attr('id');
+            var dataURL = $(this).attr('data-href');
+
+            $.ajax({
+                type: "DELETE",
+                url: dataURL,
+
+                /*dataType: 'json',
+                 headers: {
+                 'Content-Type': 'application/json'
+                 },*/
+                data: { _token: token },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
+</script>

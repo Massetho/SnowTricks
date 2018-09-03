@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 14/05/2018
- * @time: 16:32
+ * @description : Managing registration and mail confirmation.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Controller;
@@ -26,10 +23,11 @@ class RegistrationController extends Controller
     /**
      * @Route("/register", name="user_registration")
      */
-    public function register(Request $request,
+    public function register(
+        Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
-                             Mailer $mailer)
-    {
+                             Mailer $mailer
+    ) {
         // 1) build the form
         $token = new Token();
         $user = new User();
@@ -50,7 +48,6 @@ class RegistrationController extends Controller
             $entityManager->flush();
 
             // send them an email
-
             //Make message
             $url = $this->generateUrl(
                 'mail_confirmation',
@@ -64,20 +61,6 @@ class RegistrationController extends Controller
             $mailer->sendMail($subject, $content, $user->getUsername(), $user->getEmail());
 
             $this->addFlash('success', 'Confirmation email has been sent. Thank you !');
-            /*$APIkey = $this->container->getParameter('sendgrid.key');
-            $adminMail = $this->container->getParameter('admin.mail');
-            $from = new SendGrid\Email("Blogpro", $adminMail);
-            $subject = "Confirm your email address";
-            $to = $user->getUsername();
-            $to = new SendGrid\Email($to, $user->getEmail());
-
-            $content = new SendGrid\Content("text/html", $content);
-            $mail = new SendGrid\Mail($from, $subject, $to, $content);
-
-            $sg = new \SendGrid($APIkey);
-            $sg->client->mail()->send()->post($mail); */
-
-            // set a "flash" success message for the user
         }
 
         return $this->render(
@@ -96,23 +79,33 @@ class RegistrationController extends Controller
      *     methods="GET",
      *     requirements={"id"="\d+"})
      *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function confirmMail(User $user,
+    public function confirmMail(
+        User $user,
                                 $token,
-                                TokenRepository $tokenRepository)
-    {
+                                TokenRepository $tokenRepository
+    ) {
+        /*
+         * Get Token matching user & code
+         * If not found, throw exception
+         */
         $token = $tokenRepository->getMailConfirmationToken($user, $token);
         if (!$token) {
             throw $this->createNotFoundException(
                 'Invalid token'
             );
-        }
-        else {
+        } else {
+            /*
+             * Checking token expiration
+             */
             if (!$token->isValidToken()) {
                 $msg = 'Error : Token has expired. Please try again.';
-            }
-            else {
+            } else {
+                /*
+                 * If token is valid, add new User role.
+                 */
                 $user->addRole('ROLE_ADMIN');
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
@@ -126,6 +119,5 @@ class RegistrationController extends Controller
             'admin/mail_confirm.html.twig',
             array('message' => $msg)
         );
-
     }
 }

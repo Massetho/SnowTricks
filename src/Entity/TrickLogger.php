@@ -1,12 +1,8 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 11/04/2018
- * @time: 17:10
+ * @description : TrickLogger entity (for future functionality).
+ * @Author : Quentin Thomasset
  */
-
 
 namespace App\Entity;
 
@@ -130,5 +126,4 @@ class TrickLogger
     {
         $this->trick = $trick;
     }
-
 }

@@ -1,11 +1,9 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 11/04/2018
- * @time: 15:04
+ * @description : User entity.
+ * @Author : Quentin Thomasset
  */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -206,22 +204,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return integer
-     */
-    public function getRegistered()
-    {
-        return $this->registered;
-    }
-
-    /**
-     * @param integer $registered
-     */
-    public function setRegistered($registered)
-    {
-        $this->registered = $registered;
-    }
-
-    /**
      * @return Collection|TrickLogger[]
      */
     public function getTrickLoggers()
@@ -287,12 +269,12 @@ class User implements UserInterface, \Serializable
      */
     public function addRole($role)
     {
-        if(!is_array($this->getRoles())) {
+        if (!is_array($this->getRoles())) {
             $this->roles[] = $role;
-        }
-        else {
-            if (!in_array($role, $this->getRoles()))
+        } else {
+            if (!in_array($role, $this->getRoles())) {
                 $this->roles[] = $role;
+            }
         }
     }
 
@@ -325,7 +307,7 @@ class User implements UserInterface, \Serializable
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->id,
             $this->username,
             $this->password

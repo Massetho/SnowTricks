@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}TrickSlider{% endblock %}</title>
+        {% block stylesheets %}
+            <!-- Bootstrap core CSS -->
+            <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+            <!-- Custom styles for this template -->
+            <link href="{{ asset('bootstrap/css/grayscale.css') }}" rel="stylesheet">
+            <link href="{{ asset('bootstrap/css/business-frontpage.css') }}" rel="stylesheet">
+            <link href="{{ asset('bootstrap/css/trickSlider.css') }}" rel="stylesheet">
+            <link href="{{ asset('/open-iconic-master/font/css/open-iconic-bootstrap.css') }}" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+
+        {% block header %}
+            {{ include('trick/header.html.twig', {  }) }}
+        {% endblock %}
+        {% block body %}{% endblock %}
+        {% block footer %}
+            {{ include('trick/footer.html.twig', {  }) }}
+        {% endblock %}
+        {% block javascripts %}
+            <!-- Bootstrap core JavaScript -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+            <script src="{{ asset('js/commentMoreBox.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

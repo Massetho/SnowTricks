@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 14/05/2018
- * @time: 19:04
+ * @description : Token Listener
+ * @Author : Quentin Thomasset
  */
 
 namespace App\EventListener;
@@ -16,9 +13,11 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 class TokenListener extends AbstractEntityListener
 {
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Token) {
@@ -27,5 +26,4 @@ class TokenListener extends AbstractEntityListener
         $entity->generate();
         $this->setDateCreated($entity);
     }
-
 }

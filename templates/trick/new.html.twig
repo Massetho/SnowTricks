@@ -1,0 +1,27 @@
+{% extends modal == '0'
+    ? 'base.html.twig'
+    : 'trick/empty.html.twig' %}
+
+{% block title %}New Trick{% endblock %}
+
+{% block body %}
+        <!-- Page Content -->
+    <div class="container">
+    <h1>Create new Trick</h1>
+
+    {{ include('trick/_form.html.twig') }}
+
+    <a href="{{ path('trick_index') }}">back to list</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if modal == 1 %}
+        {{ include('trick/form.ajax.html.twig', {submitPath: path('trick_new', {'modal':1})}) }}
+    {% endif %}
+
+    <!-- Form Control script -->
+    <script src="{{ asset('js/trickForm.js') }}"></script>
+{% endblock %}

@@ -1,38 +1,23 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 04/05/2018
- * @time: 09:25
+ * @description : Trick Listener
+ * @Author : Quentin Thomasset
  */
 
 namespace App\EventListener;
 
-use App\Entity\Image;
 use App\Entity\Trick;
-use App\Entity\Video;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class TrickListener extends AbstractEntityListener
 {
 
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if (!$entity instanceof Trick) {
-            return;
-        }
-
-        //$this->makeCollections($entity);
-
-    }
-
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Trick) {
@@ -42,6 +27,9 @@ class TrickListener extends AbstractEntityListener
         $this->setDateCreated($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -54,26 +42,16 @@ class TrickListener extends AbstractEntityListener
     }
 
     /**
-     * Making sure my trick entity has 3 images and videos.
-     *
-     * @param Trick $trick
+     * @param LifecycleEventArgs $args
      */
-    public function makeCollections(Trick $trick)
+    public function postLoad(LifecycleEventArgs $args)
     {
-        $imageNbr = $trick->getImages()->count();
-        $videoNbr = $trick->getVideos()->count();
+        $entity = $args->getEntity();
 
-        $nbrCreate = 3 - $imageNbr;
-        for($i = 0 ; $i < $nbrCreate ; $i++) {
-            $child = new Image(); // instantiate a new child entity
-            $trick->addImage($child); // add this instance to the parent entity
+        if (!$entity instanceof Trick) {
+            return;
         }
 
-        $nbrCreate = 3 - $videoNbr;
-        for($i = 0 ; $i < $nbrCreate ; $i++) {
-            $child = new Video(); // instantiate a new child entity
-            $trick->addVideo($child); // add this instance to the parent entity
-        }
+        $entity->setURLSlug();
     }
-
 }

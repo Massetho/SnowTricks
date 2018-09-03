@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 04/05/2018
- * @time: 10:25
+ * @description : Video form
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Form;
@@ -24,9 +21,12 @@ class VideoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', UrlType::class,
+        $builder->add(
+            'url',
+            UrlType::class,
             array('label' => 'Video\'s URL',
-                'required' => false));
+                'required' => false)
+        );
     }
 
     /**

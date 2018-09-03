@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function() {
+        $('#trickFormEdit').submit(function (e) {
+            e.preventDefault();
+            var $form = new FormData(this);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ submitPath }}",
+                data: $form,
+                processData: false,
+                contentType: false,
+
+                success: function () {
+                    window.location.href='/';
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
+</script>

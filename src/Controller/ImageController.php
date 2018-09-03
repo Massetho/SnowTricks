@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 23/05/2018
- * @time: 16:20
+ * @description : Managing Images.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Controller;
@@ -25,14 +22,20 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ImageController extends Controller
 {
-
-
     /**
-     * @Route("/image/{id}", name="image_delete", methods="DELETE")
+     * @param Request $request
+     * @param Image $image
+     *
+     * @Route("/image/{id}",
+     *     name="image_delete",
+     *     methods="DELETE")
+     *
+     * @return Response
      */
-    public function delete(Request $request,
-                           Image $image): Response
-    {
+    public function delete(
+        Request $request,
+                           Image $image
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
@@ -43,6 +46,4 @@ class ImageController extends Controller
 
         return $this->redirectToRoute('trick_show', ['id' => $image->getTrick()->getId()]);
     }
-
-
 }

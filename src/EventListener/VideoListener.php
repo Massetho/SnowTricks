@@ -1,12 +1,8 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 04/05/2018
- * @time: 10:24
+ * @description : Video Listener
+ * @Author : Quentin Thomasset
  */
-
 namespace App\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -16,9 +12,11 @@ use App\Entity\Video;
 class VideoListener extends AbstractEntityListener
 {
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Video) {
@@ -28,6 +26,9 @@ class VideoListener extends AbstractEntityListener
         $this->setDateCreated($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();

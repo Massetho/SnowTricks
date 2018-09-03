@@ -1,0 +1,294 @@
+.body {
+    background-color: #f8f9fa;
+}
+
+.bottom-nav {
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.bottom-nav span {
+    font-size: 1.5em;
+    color:white;
+}
+
+.bottom-to-top {
+    position:absolute;
+    right: 5%;
+}
+
+.trick-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.trick-vignette {
+    background-color: white;
+    margin-top: 10px;
+}
+
+.media-vignette {
+    margin-top: 10px;
+}
+
+#tricks {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.vignette-container {
+    margin: -10px 0 0 0;
+}
+
+.trick-vignette-img>img {
+    max-width: 100%;
+    margin: auto;
+}
+
+.new-trick-pic {
+    display: block;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-around {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.no-padding-hor {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#trick_medias
+{
+    width: 100%;
+}
+
+.morebox {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.showMedias {
+    margin-right:auto;
+    margin-left:auto;
+}
+
+.marginTop30 {
+    margin-top: 30px;
+}
+
+.marginBottom30 {
+    margin-bottom: 30px;
+}
+
+.images,.videos {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+form ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.comments {
+    margin: 2.5rem auto 0;
+    max-width: 60.75rem;
+    padding: 0 1.25rem;
+}
+
+.comment-wrap {
+    margin-bottom: 1.25rem;
+    display: table;
+    width: 100%;
+    min-height: 5.3125rem;
+}
+
+.photo {
+    padding-top: 0.625rem;
+    display: table-cell;
+    width: 3.5rem;
+}
+.photo .avatar {
+    height: 2.25rem;
+    width: 2.25rem;
+    border-radius: 50%;
+    background-size: contain;
+}
+
+.comment-block {
+    padding: 1rem;
+    background-color: #fff;
+    display: table-cell;
+    vertical-align: top;
+    border-radius: 0.1875rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+.comment-block textarea {
+    width: 100%;
+    resize: none;
+}
+
+.comment-text {
+    margin-bottom: 1.25rem;
+}
+
+.bottom-comment {
+    color: #acb4c2;
+    font-size: 0.875rem;
+}
+
+.comment-date {
+    float: left;
+}
+
+.comment-actions {
+    float: right;
+}
+.comment-actions li {
+    display: inline;
+    margin: -2px;
+    cursor: pointer;
+}
+.comment-actions li.complain {
+    padding-right: 0.75rem;
+    border-right: 1px solid #e1e5eb;
+}
+.comment-actions li.reply {
+    padding-left: 0.75rem;
+    padding-right: 0.125rem;
+}
+.comment-actions li:hover {
+    color: #0095ff;
+}
+
+.flex-content {
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card-body {
+    padding-top: 0.25rem;
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
+    padding-bottom: 0rem;
+}
+
+.edit-links {
+    display:flex;
+    justify-content: space-between;
+    width: 60px;
+    padding: 4px;
+    background-color: white;
+}
+
+.edit-links-solo {
+    display:flex;
+    justify-content: space-between;
+    width: 25px;
+    padding: 4px;
+    background-color: white;
+}
+
+.container-relative {
+    position: relative;
+}
+
+.edit-links-absolute {
+    position: absolute;
+    right: 4%;
+    top: 4%;
+}
+
+.trick-title {
+    color:white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.oi {
+    text-decoration: none;
+    color:black;
+}
+
+.oi-chevron-bottom {
+    color:white;
+}
+
+.fixed-bottom > a {
+    color: white;
+}
+
+@media (min-width: 575px)
+{
+
+    body {
+        height: 100%;
+        padding-top: 56px;
+    }
+
+    #trick_medias
+    {
+        display: block;
+    }
+
+    .tricknav {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+
+    .items-sm {
+        display: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .modal-lg {
+        max-width: 1100px;
+    }
+}
+
+@media (max-width: 574px)
+{
+    .tricknav {
+        bottom: 0;
+        margin-bottom: 0;
+        border-width: 1px 0 0;
+    }
+
+    .items-lg {
+        display:none;
+    }
+
+    footer
+    {
+        display: none;
+    }
+
+    body {
+        padding-bottom: 80px;
+        box-sizing: unset;
+    }
+}

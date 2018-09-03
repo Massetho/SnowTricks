@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 01/05/2018
- * @time: 08:54
+ * @description : Image Listener
+ * @Author : Quentin Thomasset
  */
 
 namespace App\EventListener;
@@ -16,10 +13,11 @@ use App\Entity\TopImage;
 
 class ImageListener extends AbstractEntityListener
 {
-
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Image) {
@@ -29,6 +27,9 @@ class ImageListener extends AbstractEntityListener
         $this->setDateCreated($entity);
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -39,5 +40,4 @@ class ImageListener extends AbstractEntityListener
 
         $this->setDateCreated($entity);
     }
-
 }

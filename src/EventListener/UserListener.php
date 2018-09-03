@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 14/05/2018
- * @time: 18:57
+ * @description : User Listener
+ * @Author : Quentin Thomasset
  */
 
 namespace App\EventListener;
@@ -16,9 +13,11 @@ use App\Entity\User;
 class UserListener extends AbstractEntityListener
 {
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof User) {
@@ -27,5 +26,4 @@ class UserListener extends AbstractEntityListener
 
         $this->setDateCreated($entity);
     }
-
 }

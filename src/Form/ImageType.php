@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 27/04/2018
- * @time: 15:08
+ * @description : Image form
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Form;
@@ -24,9 +21,12 @@ class ImageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', FileType::class,
+        $builder->add(
+            'file',
+            FileType::class,
             array('label' => 'Image(JPG)',
-                'required' => false));
+                'required' => false)
+        );
     }
 
     /**

@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 11/04/2018
- * @time: 16:57
+ * @description : Trick entity.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Entity;
@@ -98,6 +95,11 @@ class Trick
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"remove", "persist"})
      */
     private $comments;
+
+    /**
+     * @var string $slug
+     */
+    private $slug;
 
     //FONCTIONS
 
@@ -221,10 +223,11 @@ class Trick
      */
     public function getTopImage() : Image
     {
-        if (!$this->getImages()->isEmpty())
+        if (!$this->getImages()->isEmpty()) {
             $topImage = $this->getImages()->first();
-        else
+        } else {
             $topImage = new Image();
+        }
         return $topImage;
     }
 
@@ -255,6 +258,22 @@ class Trick
     public function setDateUpdated($dateUpdated)
     {
         $this->dateUpdated = $dateUpdated;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 
     //ADDERS
@@ -292,9 +311,9 @@ class Trick
         if ($firstKey) {
             $image->setTrick($this);
             $this->images->set($image, $firstKey);
-        }
-        else
+        } else {
             $this->addImage($image);
+        }
 
         return $this;
     }
@@ -305,8 +324,9 @@ class Trick
      */
     public function addBottomImages($image)
     {
-        if ($image instanceof Image)
+        if ($image instanceof Image) {
             $this->addImage($image);
+        }
 
         return $this;
     }
@@ -395,6 +415,17 @@ class Trick
 
     //OTHER FUNCTIONS
 
+    /**
+     * URL slug generator.
+     */
+    public function setURLSlug()
+    {
+        if (!$this->getName()) {
+            return;
+        }
 
+        $slug = str_replace(" ", "-", $this->getName());
 
+        $this->setSlug(rawurlencode($slug));
+    }
 }

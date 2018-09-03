@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 14/05/2018
- * @time: 16:19
+ * @description : Mail form (for reset password demand form)
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Form;
@@ -17,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class MailType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

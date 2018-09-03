@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 18/05/2018
- * @time: 16:56
+ * @description : Password form (for password reset)
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Form;
@@ -18,6 +15,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserPasswordType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,6 +30,9 @@ class UserPasswordType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

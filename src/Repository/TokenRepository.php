@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 17/04/2018
- * @time: 10:26
+ * @description : Token repository
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Repository;
@@ -16,6 +13,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TokenRepository extends ServiceEntityRepository
 {
+    /**
+     * TokenRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Token::class);
@@ -25,6 +26,7 @@ class TokenRepository extends ServiceEntityRepository
      * @param User $user
      * @param string $token
      * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getMailConfirmationToken($user, $token)
     {

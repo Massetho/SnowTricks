@@ -1,10 +1,7 @@
 <?php
 /**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 23/05/2018
- * @time: 16:20
+ * @description : Managing Videos.
+ * @Author : Quentin Thomasset
  */
 
 namespace App\Controller;
@@ -21,7 +18,9 @@ class VideoController extends Controller
 {
 
     /**
-     * @Route("/video/{id}", name="video_delete", methods="DELETE")
+     * @Route("/video/{id}",
+     *     name="video_delete",
+     *     methods="DELETE")
      */
     public function delete(Request $request, Video $video): Response
     {
@@ -35,5 +34,4 @@ class VideoController extends Controller
 
         return $this->redirectToRoute('trick_show', ['id' => $video->getTrick()->getId()]);
     }
-
 }

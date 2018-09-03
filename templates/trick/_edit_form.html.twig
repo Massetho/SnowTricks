@@ -1,0 +1,95 @@
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="container-relative">
+            <img src="{{ asset(form.topImage.vars.data.webPath|default('img/trick/default.jpg')) }}">
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="edit-links-absolute">
+                    {{ include('medias/image.edit.html.twig', { 'image' :form.topImage }) }}
+                </div>
+            {% endif %}
+
+            <h1 class="display-4 trick-title">{{ form.vars.data.name }}</h1>
+        </div>
+    </div>
+
+
+    <div class="row marginTop30">
+            <div class="btn btn-secondary d-sm-none marginBottom30 showMedias" data-toggle="collapse" data-target="#trick_medias">See medias.</div>
+
+            <div id="trick_medias" class="collapse">
+                <div class="flex-container vignette-container">
+
+                    <div class="images flex-container col-6" data-prototype="{{ form_widget(form.bottomImages.vars.prototype)|e('html_attr') }}">
+                        {# iterate over each existing tag and render its only field: name #}
+                        {% for image in form.bottomImages %}
+                        <div class="media-vignette col-lg-4 col-md-4 col-12">
+                            <img class="card-img-top" src="{{ asset(image.vars.data.webPath|default('img/trick/default.jpg')) }}">
+                            <div>
+                                {{ include('medias/image.edit.html.twig', {  }) }}
+                            </div>
+                        </div>
+                        {% else %}
+                            <div class="media-vignette col-lg-4 col-md-4 col-12">
+                                <div class="">no image yet</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="videos flex-container col-6" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+                    {% for video in form.videos %}
+                        <div class="media-vignette col-lg-4 col-md-4 col-12">
+                            {{ video.vars.data.video|raw }}
+                            <div>
+                                {{ include('medias/video.edit.html.twig', {  }) }}
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <div class="media-vignette col-lg-4 col-md-4 col-12">
+                            <div class="">no video yet</div>
+                        </div>
+                    {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="clearfix marginTop30"></div>
+    <div class="row">
+            <div class="col-md-6 col-12 images-box"></div>
+            <div class="col-md-6 col-12 videos-box"></div>
+            <div class="col-md-6 col-6 images-button-box marginTop30"></div>
+            <div class="col-md-6 col-6 videos-button-box marginTop30"></div>
+    </div>
+
+    <div class="clearfix marginTop30"></div>
+
+    <div class="flex-container"  style="justify-content: center;">
+    <div class="col-lg-8 col-12">
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    <div class="clearfix marginTop30"></div>
+    <div class="row">
+        <div class="col-lg-4 col-6">
+            {{ form_row(form.groups) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 flex-container"  style="justify-content: flex-end">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success marginBottom30" role="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <input class="btn btn-primary" type="submit" value="{{ button_label|default('Send comment') }}" />
+        </div>
+    </div>
+
+
+    {# <button class="btn" id="submitTrickForm" onclick="$('#trickFormEdit').submit();">{{ button_label|default('Save') }}</button> #}
+
+    {{ form_end(form) }}
