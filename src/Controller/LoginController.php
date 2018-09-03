@@ -117,7 +117,7 @@ class LoginController extends Controller
      *
      * @Route("/password_reset/{id}/{token}",
      *     name="password_reset",
-     *     methods="GET",
+     *     methods="GET|POST",
      *     requirements={"id"="\d+"})
      *
      * @return Response
@@ -172,7 +172,7 @@ class LoginController extends Controller
                 }
 
                 return $this->render(
-                    'admin/register.html.twig',
+                    'admin/new_password.html.twig',
                     array('form' => $form->createView())
                 );
             }
