@@ -18,7 +18,7 @@ Cloning the project repository :
 $ git clone https://github.com/Massetho/TrickSlider
 ```
 
-Edit `config/services_sample.yaml` by adding your **Sendgrid API key** and **admin mail** in the parameters. Then rename the file `services.yaml`.
+Edit `.env.dist` by adding your **Sendgrid API key** and **admin mail** in the parameters. Then rename the file `.env`.
 
 
 Getting all dependencies :
@@ -44,7 +44,7 @@ $ php bin/console doctrine:fixtures:load
 
 The default account have the following credentials :
 - **User** : "admin"
-- **Email** : the email address provided by you in `config/services.yaml`.
+- **Email** : the email address provided by you in the `ADMIN_MAIL` environment constant.
 - **Password** : "*pass1234*"
 
 ## Running the tests
