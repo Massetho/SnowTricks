@@ -1,11 +1,6 @@
 <?php
-/**
- * @description :
- * @package : PhpStorm.
- * @Author : quent
- * @date: 29/06/2018
- * @time: 14:21
- */
+/*
+ * NOT FUNCTIONAL TEST
 
 namespace App\Tests\Form;
 
@@ -44,7 +39,7 @@ class TrickTypeTest extends TypeTestCase
     protected function setUp()
     {
         // mock any dependencies
-        /*$this->em = DoctrineTestHelper::createTestEntityManager();
+        $this->em = DoctrineTestHelper::createTestEntityManager();
         $this->objectManager = $this->createMock(ManagerRegistry::class);
         //$this->appEntityGroup = $this->createMock(Group::class);
 
@@ -55,7 +50,7 @@ class TrickTypeTest extends TypeTestCase
 
         $this->objectManager->expects($this->any())
             ->method('getManagerForClass')
-            ->will($this->returnValue($this->em));*/
+            ->will($this->returnValue($this->em));
 
 
         parent::setUp();
@@ -141,3 +136,4 @@ class TrickTypeTest extends TypeTestCase
         }
     }
 }
+*/
