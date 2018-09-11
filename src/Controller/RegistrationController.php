@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegistrationController extends Controller
 {
@@ -52,9 +53,10 @@ class RegistrationController extends Controller
             $url = $this->generateUrl(
                 'mail_confirmation',
                 array('id' => $user->getId(),
-                    'token' => $token->getToken())
+                    'token' => $token->getToken()),
+                UrlGeneratorInterface::ABSOLUTE_URL
             );
-            $content = '<p>You have been registered. Please follow this link to activate your account :</p> <br> <p>http://symfony.test' . $url . '</p>';
+            $content = '<p>You have been registered. Please follow this link to activate your account :</p> <br> <p>' . $url . '</p>';
 
             $subject = "Confirm your email address";
             //SEND MAIL with Token
