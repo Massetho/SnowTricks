@@ -16,10 +16,10 @@ use App\Form\UserPasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LoginController extends Controller
 {
@@ -85,9 +85,10 @@ class LoginController extends Controller
                     $url = $this->generateUrl(
                         'password_reset',
                         array('id' => $user->getId(),
-                            'token' => $token->getToken())
+                            'token' => $token->getToken()),
+                        UrlGeneratorInterface::ABSOLUTE_URL
                     );
-                    $content = '<p>You asked for a password reset. If you want to change your password, please follow this link :</p> <br> <p>http://symfony.test' . $url . '</p>';
+                    $content = '<p>You asked for a password reset. If you want to change your password, please follow this link :</p> <br> <p>' . $url . '</p>';
                     $subject = "Reset your password";
 
                     /*
