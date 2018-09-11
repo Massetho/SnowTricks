@@ -424,7 +424,7 @@ class Trick
             return;
         }
 
-        $slug = str_replace(" ", "-", $this->getName());
+        $slug = str_replace(" ", "-", strtolower($this->getName()));
 
         $this->setSlug(rawurlencode($slug));
     }
