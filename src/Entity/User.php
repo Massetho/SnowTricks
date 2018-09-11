@@ -233,6 +233,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param Token $token
+     */
+    public function removeToken(Token $token)
+    {
+        $this->tokens->removeElement($token);
+    }
+
+    /**
      * @return Collection|Comment[]
      */
     public function getComments()

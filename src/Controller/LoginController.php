@@ -161,7 +161,10 @@ class LoginController extends Controller
                     $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                     $user->setPassword($password);
 
-                    // 4) save the User!
+                    // 4) Remove Token
+                    $user->removeToken($token);
+
+                    // 5) save the User!
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($user);
                     $entityManager->flush();

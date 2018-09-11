@@ -23,11 +23,11 @@ class RegistrationController extends Controller
     /**
      * @Route("/register", name="user_registration")
      */
-    public function register(
-        Request $request,
+    public function register(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
                              Mailer $mailer
-    ) {
+    )
+    {
         // 1) build the form
         $token = new Token();
         $user = new User();
