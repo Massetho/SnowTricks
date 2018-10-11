@@ -22,13 +22,6 @@ class Comment
 
     /**
      * @var string $content
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 1000,
-     *      minMessage = "Comments must be at least {{ limit }} characters long",
-     *      maxMessage = "Comments cannot be longer than {{ limit }} characters"
-     * )
      * @ORM\Column(type="string", length=1000)
      */
     private $content;
@@ -100,10 +93,12 @@ class Comment
 
     /**
      * @param \DateTime $dateCreated
+     * @return Comment
      */
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
+        return $this;
     }
 
     /**
@@ -116,10 +111,12 @@ class Comment
 
     /**
      * @param User $user
+     * @return Comment
      */
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
     }
 
     /**
@@ -132,9 +129,11 @@ class Comment
 
     /**
      * @param Trick $trick
+     * @return Comment
      */
     public function setTrick($trick)
     {
         $this->trick = $trick;
+        return $this;
     }
 }

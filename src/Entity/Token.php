@@ -67,10 +67,12 @@ class Token
 
     /**
      * @param mixed $dateCreated
+     * @return Token
      */
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
+        return $this;
     }
 
     /**

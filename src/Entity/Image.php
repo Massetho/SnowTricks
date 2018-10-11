@@ -7,6 +7,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,9 +34,6 @@ class Image
 
     /**
      * @ORM\Column(type="string")
-     *
-     * @Assert\NotBlank(message="Add a jpg picture")
-     * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $file;
 
@@ -59,7 +58,17 @@ class Image
 
 
     //FUNCTIONS
+    /**
+     * Image constructor.
+     */
+    public function __construct()
+    {
+        $this->setDateCreated(new \DateTime());
+    }
+
+
     //GETTERS & SETTERS
+
     /**
      * @return int
      */
@@ -97,6 +106,8 @@ class Image
      */
     public function getFile()
     {
+        if (is_readable($this->file) && (!$this->file instanceof UploadedFile))
+            return new File($this->file);
         return $this->file;
     }
 

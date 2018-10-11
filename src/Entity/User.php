@@ -34,26 +34,12 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var string $username
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 50,
-     *      minMessage = "Your username must be at least {{ limit }} characters long",
-     *      maxMessage = "Your username cannot be longer than {{ limit }} characters"
-     * )
      * @ORM\Column(type="string", length=100, unique=true)
      */
     private $username;
 
     /**
      * @var string $email
-     *
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     * @Assert\Length(
-     *      max = 254,
-     *      maxMessage = "Your email cannot be longer than {{ limit }} characters"
-     * )
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
@@ -96,14 +82,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var string $plainPassword
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 4000,
-     *      minMessage = "Your password must be at least {{ limit }} characters long",
-     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
-     * )
      */
     private $plainPassword;
 
@@ -181,10 +159,12 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param mixed $password
+     * @return User
      */
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
     }
 
     /**
@@ -197,10 +177,12 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param string $dateCreated
+     * @return User
      */
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
+        return $this;
     }
 
     /**

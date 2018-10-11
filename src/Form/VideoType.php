@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class VideoType extends AbstractType
 {
@@ -25,7 +27,11 @@ class VideoType extends AbstractType
             'url',
             UrlType::class,
             array('label' => 'Video\'s URL',
-                'required' => false)
+                'required' => false,
+                'constraints' => array(new NotBlank(array('message' => 'Add a video URL')),
+                    new Regex(array('pattern' => "#^(http|https)://(www.youtube.com|www.dailymotion.com|vimeo.com)/#",
+                    'match' => true,
+                    'message' => "The URL must be of a Youtube, DailyMotion or Vimeo video."))))
         );
     }
 
