@@ -10,10 +10,6 @@
 
         <div class="row">
             <div class="col-12 flex-container marginTop30" style="justify-content: flex-end;">
-                {% if modal == '0' %}
-                <a class="btn btn-default" href="{{ path('trick_index') }}">back to list</a>
-                {% endif %}
-
                 {{ include('trick/_delete_form.html.twig', {deleteButton: 'yes'}) }}
             </div>
         </div>
@@ -31,7 +27,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% if modal == 1 %}
+    {% if modal == 3445 %}
         {{ include('trick/form.ajax.html.twig', {submitPath: path('trick_edit', {'id': form.vars.data.id, 'modal':1})}) }}
     {% endif %}
     {{ include('medias/_delete_media_ajax.html.twig') }}

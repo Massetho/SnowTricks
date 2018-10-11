@@ -103,6 +103,11 @@
                         {{ flashMessage }}
                     </div>
                     {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('error') %}
+                        <div class="alert alert-danger marginBottom30" role="alert">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
 
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"

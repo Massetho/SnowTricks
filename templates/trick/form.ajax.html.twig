@@ -11,8 +11,9 @@
                 processData: false,
                 contentType: false,
 
-                success: function () {
-                    window.location.href='/';
+                success: function (response) {
+                    $('#trickFormEdit').html(response);
+                    //window.location.href='/';
                 },
                 error: function (response) {
                     console.log(response);

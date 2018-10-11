@@ -19,21 +19,24 @@
                 </div>
             </div>
         {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="row">
+                <div class="alert alert-danger marginBottom30" role="alert">
+                    {{ flashMessage }}
+                </div>
+            </div>
+        {% endfor %}
         <div class="row">
             <div id="tricks-thumbs" class="container trick-container vignette-container">
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="col-lg-2 col-md-2 col-6 trick-vignette">
                         <div class="card">
-                            <a href="{{ path('trick_new') }}" class="items-sm">
-                                <img class="card-img-top trick-vignette-img new-trick-pic" src="{{ asset('img/trick/create.svg') }}">
-                            </a>
-                            <a href="javascript:void(0);" data-href="{{ path('trick_new', {'modal':1}) }}" class="openModal items-lg">
+                            <a href="{{ path('trick_new') }}">
                                 <img class="card-img-top trick-vignette-img new-trick-pic" src="{{ asset('img/trick/create.svg') }}">
                             </a>
                             <div class="card-body flex-content">
                                 <div>
-                                    <a href="{{ path('trick_new') }}" class="items-sm"><h5 class="card-title">New Trick</h5></a>
-                                    <a href="javascript:void(0);" data-href="{{ path('trick_new', {'modal':1}) }}" class="openModal items-lg"><h5 class="card-title">New Trick</h5></a>
+                                    <a href="{{ path('trick_new') }}"><h5 class="card-title">New Trick</h5></a>
                                 </div>
 
                             </div>

@@ -1,12 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TrickSlider{% endblock %}
-
 {% block body %}
 
     <div class="container">
-        <h1>Email Confirmation</h1>
-        <p>{{ message }}</p>
+        <row>
+            <h1 class="marginTop30">Email Confirmation</h1>
+        </row>
 
+        <row>
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success marginBottom30" role="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger marginBottom30" role="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+        </row>
     </div>
 {% endblock %}
