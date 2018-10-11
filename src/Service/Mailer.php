@@ -6,33 +6,30 @@
 
 namespace App\Service;
 
-use \SendGrid;
-
 class Mailer
 {
-    /**
-     * @var string $sendgridKey
-     */
-    private $sendgridKey;
-
     /**
      * @var string $adminMail
      */
     private $adminMail;
 
+    /**
+     * @var string $adminMail
+     */
+    private $swiftMailer;
+
     //FUNCTIONS
 
     /**
-     * @param string $sendgridKey
-     * @param string $adminMail
+     * Mailer constructor.
+     * @param $adminMail
+     * @param \Swift_Mailer $mailer
      */
-    public function __construct($sendgridKey, $adminMail)
+    public function __construct($adminMail, \Swift_Mailer $mailer)
     {
-        $this->sendgridKey = $sendgridKey;
         $this->adminMail = $adminMail;
+        $this->swiftMailer = $mailer;
     }
-
-    //GETTERS & SETTERS
 
     /**
      * @param string $subject
@@ -42,18 +39,17 @@ class Mailer
      */
     public function sendMail(
         $subject,
-                             $content,
-                             $targetName,
-                             $targetMail
+        $content,
+        $targetName,
+        $targetMail
     ) {
-        $from = new SendGrid\Email("Blogpro", $this->adminMail);
-        $to = $targetName;
-        $to = new SendGrid\Email($to, $targetMail);
+        $message = (new \Swift_Message($subject))
+            ->setFrom($this->adminMail)
+            ->setTo(array($targetMail => $targetName))
+            ->setBody($content,'text/html'
+            )
+        ;
 
-        $content = new SendGrid\Content("text/html", $content);
-        $mail = new SendGrid\Mail($from, $subject, $to, $content);
-
-        $sg = new \SendGrid($this->sendgridKey);
-        $sg->client->mail()->send()->post($mail);
+        $this->swiftMailer->send($message);
     }
 }
