@@ -13,7 +13,7 @@ You must have installed the following before install :
 ## Installing
 Cloning the project repository :
 ```
-$ git clone https://github.com/Massetho/TrickSlider
+$ git clone https://github.com/Massetho/SnowTricks
 ```
 
 Edit `.env.dist` by adding your *MAILER_URL* and **admin mail** in the parameters. Then rename the file `.env`.

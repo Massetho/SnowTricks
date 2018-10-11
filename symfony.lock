@@ -191,12 +191,6 @@
     "sebastian/version": {
         "version": "2.0.1"
     },
-    "sendgrid/php-http-client": {
-        "version": "3.9.6"
-    },
-    "sendgrid/sendgrid": {
-        "version": "6.2.0"
-    },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
         "recipe": {
