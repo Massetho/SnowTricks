@@ -11,6 +11,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CommentType extends AbstractType
 {
@@ -21,7 +23,14 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', TextareaType::class, array(
-            'label' => false
+            'label' => false,
+            'required' => true,
+            'constraints' => array(new Length(array('min' => 4,
+                'max' => 1000,
+                'minMessage' => "Comments must be at least {{ limit }} characters long",
+                'maxMessage' => "Comments cannot be longer than {{ limit }} characters")),
+                new NotBlank())
+
         ));
     }
 

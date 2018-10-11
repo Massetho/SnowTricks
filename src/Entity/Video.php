@@ -41,19 +41,14 @@ class Video
     private $dateCreated;
 
     /**
-     * @var string
+     * @var string $code
      *
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $code;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="#^(http|https)://(www.youtube.com|www.dailymotion.com|vimeo.com)/#",
-     *     match=true,
-     *     message="The URL must be of a Youtube, DailyMotion or Vimeo video"
-     * )
+     * @var string $url
      */
     private $url;
 
@@ -67,6 +62,14 @@ class Video
     private $trick;
 
     //FUNCTIONS
+    /**
+     * Video constructor.
+     */
+    public function __construct()
+    {
+        $this->setDateCreated(new \DateTime());
+    }
+
     //GETTERS & SETTERS
 
     /**
@@ -158,6 +161,9 @@ class Video
      */
     public function getUrl()
     {
+        if(empty($this->url)) {
+            $this->recomposeUrl();
+        }
         return $this->url;
     }
 

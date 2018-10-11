@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class VideoTest extends TestCase
 {
-    public function testVideoURL()
+    public function testImagePath()
     {
         $video = new Video();
         $video->setUrl('https://www.youtube.com/watch?v=l_XRrUWC_wg');

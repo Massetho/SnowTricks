@@ -22,9 +22,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class RegistrationController extends Controller
 {
     /**
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param Mailer $mailer
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @Route("/register", name="user_registration")
      */
     public function register(Request $request,
+                             UserRepository $userRepository,
                              UserPasswordEncoderInterface $passwordEncoder,
                              Mailer $mailer
     )
@@ -33,93 +40,48 @@ class RegistrationController extends Controller
         $token = new Token();
         $user = new User();
         $user->addToken($token);
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user,  array('validation_groups' => array('registration')));
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //Check if Mail is already used
+            $userMail = $userRepository->loadUserByUsername($form->get('email')->getData());
+            if($userMail)
+                $this->addFlash('error', 'Email is already used.');
 
-            // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
+            //Check if Username is already used
+            $userName = $userRepository->loadUserByUsername($form->get('username')->getData());
+            if($userName)
+                $this->addFlash('error', 'Username is already used.');
 
-            // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            if (!$userMail && !$userName) {
 
-            // send them an email
-            //Make message
-            $url = $this->generateUrl(
-                'mail_confirmation',
-                array('id' => $user->getId(),
-                    'token' => $token->getToken()),
-                UrlGeneratorInterface::ABSOLUTE_URL
-            );
-            $content = '<p>You have been registered. Please follow this link to activate your account :</p> <br> <p>' . $url . '</p>';
+                // 3) Encode the password
+                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password)->setDateCreated(new \DateTime());
 
-            $subject = "Confirm your email address";
-            //SEND MAIL with Token
-            $mailer->sendMail($subject, $content, $user->getUsername(), $user->getEmail());
+                // 4) save the User!
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation email has been sent. Thank you !');
+                // send them an email
+                $content = $this->renderView(
+                    'emails/registration.html.twig',
+                    array('name' => $user->getUsername(), 'id' => $user->getId(), 'token' => $token->getToken())
+                );
+                $subject = "Confirm your email address";
+                //SEND MAIL with Token
+                $mailer->sendMail($subject, $content, $user->getUsername(), $user->getEmail());
+
+                $this->addFlash('success', 'Confirmation email has been sent. Thank you !');
+            }
         }
 
         return $this->render(
             'admin/register.html.twig',
             array('form' => $form->createView())
-        );
-    }
-
-    /**
-     * @param User $user
-     * @param string $token
-     * @param TokenRepository $tokenRepository
-     *
-     * @Route("/mail_confirm/{id}/{token}",
-     *     name="mail_confirmation",
-     *     methods="GET",
-     *     requirements={"id"="\d+"})
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @return Response
-     */
-    public function confirmMail(
-        User $user,
-                                $token,
-                                TokenRepository $tokenRepository
-    ) {
-        /*
-         * Get Token matching user & code
-         * If not found, throw exception
-         */
-        $token = $tokenRepository->getMailConfirmationToken($user, $token);
-        if (!$token) {
-            throw $this->createNotFoundException(
-                'Invalid token'
-            );
-        } else {
-            /*
-             * Checking token expiration
-             */
-            if (!$token->isValidToken()) {
-                $msg = 'Error : Token has expired. Please try again.';
-            } else {
-                /*
-                 * If token is valid, add new User role.
-                 */
-                $user->addRole('ROLE_ADMIN');
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $msg = 'Thanks for confirming your email address. You can now login with your account.';
-            }
-        }
-
-        return $this->render(
-            'admin/mail_confirm.html.twig',
-            array('message' => $msg)
         );
     }
 }

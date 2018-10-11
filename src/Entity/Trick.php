@@ -28,14 +28,6 @@ class Trick
     private $id;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 120,
-     *      minMessage = "Trick name must be at least {{ limit }} characters long",
-     *      maxMessage = "Trick name cannot be longer than {{ limit }} characters"
-     * )
-     *
      * @ORM\Column(type="string", length=125, unique=true)
      */
     private $name;
@@ -54,13 +46,6 @@ class Trick
 
     
     /**
-     * @Assert\Length(
-     *      min = 12,
-     *      max = 5000,
-     *      minMessage = "Trick description must be at least {{ limit }} characters long",
-     *      maxMessage = "Trick description cannot be longer than {{ limit }} characters"
-     * )
-     *
      * @ORM\Column(type="string", length=5000)
      */
     private $description;
@@ -141,7 +126,7 @@ class Trick
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -265,6 +250,9 @@ class Trick
      */
     public function getSlug()
     {
+        if(empty($this->slug)) {
+            $this->setURLSlug();
+        }
         return $this->slug;
     }
 

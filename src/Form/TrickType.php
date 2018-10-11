@@ -10,11 +10,15 @@ use App\Entity\Trick;
 use App\Form\ImageType;
 use App\Form\VideoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TrickType extends AbstractType
 {
@@ -25,9 +29,19 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class, array(
+                'constraints' => array(new Length(array('min' => 4,
+                    'max' => 120,
+                    'minMessage' => "Trick name must be at least {{ limit }} characters long",
+                    'maxMessage' => "Trick name cannot be longer than {{ limit }} characters")),
+                    new NotBlank())
+            ))
             ->add('description', TextareaType::class, array(
                 'attr' => array('rows' => '15'),
+                'constraints' => array(new Length(array('min' => 12,
+                    'max' => 5000,
+                    'minMessage' => "Trick description must be at least {{ limit }} characters long",
+                    'maxMessage' => "Trick description cannot be longer than {{ limit }} characters")))
             ))
             ->add('groups', EntityType::class, array(
                 'class'        => 'App\Entity\Group',

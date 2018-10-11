@@ -25,7 +25,7 @@
 
             <div id="trick_medias" class="collapse">
                 <div class="flex-container">
-                    {% for image in images %}
+                    {% for image in trick.bottomImages %}
                         <div class="media-vignette col-lg-2 col-md-6 col-6">
                             <img src="{{ asset(image.webPath|default('img/trick/default.jpg')) }}">
                         </div>

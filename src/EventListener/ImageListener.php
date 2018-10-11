@@ -10,13 +10,29 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Image;
 use App\Entity\TopImage;
+use App\Service\ImagePath;
 
-class ImageListener extends AbstractEntityListener
+class ImageListener
 {
+
+    /**
+     * @var ImagePath
+     */
+    private $pathMaker;
+
+    /**
+     * ImageUploadListener constructor.
+     * @param ImagePath $pathMaker
+     */
+    public function __construct(ImagePath $pathMaker)
+    {
+        $this->pathMaker = $pathMaker;
+    }
+
     /**
      * @param LifecycleEventArgs $args
      */
-    public function prePersist(LifecycleEventArgs $args)
+    public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 
@@ -24,20 +40,7 @@ class ImageListener extends AbstractEntityListener
             return;
         }
 
-        $this->setDateCreated($entity);
+        $this->pathMaker->setPath($entity);
     }
 
-    /**
-     * @param PreUpdateEventArgs $args
-     */
-    public function preUpdate(PreUpdateEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if (!$entity instanceof Image) {
-            return;
-        }
-
-        $this->setDateCreated($entity);
-    }
 }

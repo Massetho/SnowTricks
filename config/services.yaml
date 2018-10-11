@@ -5,9 +5,7 @@ parameters:
     token.entity: App\Entity\Token
     user.entity: App\Entity\User
     image_trick_directory: '%kernel.project_dir%/public/img/trick/'
-    # image_trick_directory: 'img/trick/'
-    image_directory: 'img/'
-    sendgrid.key: '%env(resolve:SENDGRID_KEY)%'
+    image_directory: 'img/trick/'
     admin.mail: '%env(resolve:ADMIN_MAIL)%'
 
 services:
@@ -48,12 +46,12 @@ services:
     App\Service\ImagePath:
         class: App\Service\ImagePath
         arguments:
-            $targetDirectory: '%image_directory%'
+            $webPath: '%image_directory%'
+            $targetDirectory: '%image_trick_directory%'
 
     App\Service\Mailer:
         class: App\Service\Mailer
         arguments:
-            $sendgridKey: '%sendgrid.key%'
             $adminMail: '%admin.mail%'
 
     App\Service\ImageUploader:
@@ -72,33 +70,7 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
-            - { name: doctrine.event_listener, event: postLoad }
 
     App\EventListener\ImageListener:
         tags:
-            - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
-
-    App\EventListener\VideoListener:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postLoad }
-
-    App\EventListener\TrickListener:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
-            - { name: doctrine.event_listener, event: postLoad }
-
-    App\EventListener\UserListener:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-
-    App\EventListener\CommentListener:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-
-    App\EventListener\TokenListener:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }

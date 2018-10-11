@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use \Symfony\Component\Validator\Constraints\Image as ImageConstraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageType extends AbstractType
 {
@@ -25,7 +27,12 @@ class ImageType extends AbstractType
             'file',
             FileType::class,
             array('label' => 'Image(JPG)',
-                'required' => false)
+                'required' => false,
+                'constraints' => array(new ImageConstraint(array('mimeTypes' => array("image/jpeg"),
+                        'minWidth' => 200,
+                        'maxWidth' => 3000,
+                        'minHeight' => 200,
+                        'maxHeight' => 3000))))
         );
     }
 

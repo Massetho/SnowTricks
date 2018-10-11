@@ -13,15 +13,13 @@ You must have installed the following before install :
 - [Git](https://git-scm.com/downloads)
 - [Composer](https://getcomposer.org/)
 
-Also, create a [Sendgrid](https://sendgrid.com/) account with a unique API key.
-
 ## Installing
 Cloning the project repository :
 ```
-$ git clone https://github.com/Massetho/TrickSlider
+$ git clone https://github.com/Massetho/SnowTricks
 ```
 
-Edit `.env.dist` by adding your **Sendgrid API key** and **admin mail** in the parameters. Then rename the file `.env`.
+Edit `.env.dist` by adding your *MAILER_URL* and **admin mail** in the parameters. Then rename the file `.env`.
 
 
 Getting all dependencies :
@@ -47,11 +45,12 @@ $ php bin/console doctrine:fixtures:load
 
 The default account have the following credentials :
 - **User** : "admin"
-- **Email** : the email address provided by you in the `ADMIN_MAIL` environment constant.
+- **Email** : the email address provided by you in the *ADMIN_MAIL* environment constant.
 - **Password** : "*pass1234*"
 
 ## Running the tests
-From the root folder of your project :
+First, make sure to edit the `phpunit.xml.dist` file to define the *DATABASE_URL* and *ADMIN_MAIL* constants.
+Then, from the root folder of your project :
 ```
 $ php vendor/bin/phpunit
 ```
