@@ -44,24 +44,6 @@ class ImageUploadListener
     /**
      * @param LifecycleEventArgs $args
      */
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if (!$entity instanceof Image) {
-            return;
-        }
-
-        if ($fileName = $entity->getFile()) {
-            $entity->setFile(new File($this->uploader->getTargetDirectory().$fileName));
-            $entity->setPath($entity->getFile()->getPathname());
-            $this->pathMaker->setWebPath($entity);
-        }
-    }
-
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -69,15 +51,6 @@ class ImageUploadListener
         $this->uploadFile($entity);
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
-    public function preRemove(LifecycleEventArgs  $args)
-    {
-        $entity = $args->getEntity();
-
-        $this->removeFile($entity);
-    }
 
     /**
      * @param PreUpdateEventArgs $args
@@ -146,20 +119,6 @@ class ImageUploadListener
         if ($file instanceof UploadedFile) {
             $fileName = $this->uploader->upload($file);
             $entity->setFile($fileName);
-        }
-    }
-
-    /**
-     * @param $entity
-     */
-    private function removeFile($entity)
-    {
-        if (!$entity instanceof Image) {
-            return;
-        }
-
-        if ($file = $entity->getPath()) {
-            unlink($file);
         }
     }
 }
