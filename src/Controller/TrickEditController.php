@@ -41,7 +41,7 @@ class TrickEditController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //$uploader->handleForm($form, $trick);
+            $uploader->handleForm($form, $trick);
             $trick->setDateUpdated(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 

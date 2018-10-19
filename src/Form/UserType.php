@@ -52,7 +52,8 @@ class UserType extends AbstractType
                 'constraints' => array(new Length(array('min' => 4,
                     'max' => 4000,
                     'minMessage' => "Password be at least {{ limit }} characters long",
-                    'maxMessage' => "Password cannot be longer than {{ limit }} characters")),
+                    'maxMessage' => "Password cannot be longer than {{ limit }} characters",
+                    'groups' => array('registration', 'reset_password'))),
                     new NotBlank(array(
                         'groups' => array('registration', 'reset_password'))))
             ))

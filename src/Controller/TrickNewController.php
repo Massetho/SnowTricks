@@ -18,6 +18,7 @@ class TrickNewController extends Controller
     /**
      * @param Request $request
      * @param $modal
+     * @param ImageUploader $uploader
      * @Route("/admin/new/{modal}",
      *     name="trick_new",
      *     methods="GET|POST",
@@ -25,7 +26,7 @@ class TrickNewController extends Controller
      *     requirements={"modal":"1|0"})
      * @return Response
      */
-    public function newTrick(Request $request, $modal): Response
+    public function newTrick(Request $request, $modal, ImageUploader $uploader): Response
     {
         $trick = new Trick();
 
@@ -36,19 +37,14 @@ class TrickNewController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $uploader->handleForm($form, $trick);
             $trick->setDateCreated(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
             $em->flush();
             $this->addFlash('success', 'Trick has been created successfully.');
 
-            //Adapting display for small or big screen
-            if ($modal == 1) {
-                return new Response();
-            } else {
-                return $this->redirectToRoute('trick_index');
-            }
+            return $this->redirectToRoute('trick_index');
         }
 
         return $this->render('trick/new.html.twig', [
