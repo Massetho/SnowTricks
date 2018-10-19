@@ -1,4 +1,4 @@
-# TrickSlider
+# Snow Tricks
 Community website about snowboard tricks
 
 ## Prerequisites
