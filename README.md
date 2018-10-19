@@ -1,4 +1,7 @@
 # Snow Tricks
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ed42ea222b940a5961601fe5ec1772e)](https://app.codacy.com/app/Massetho/TrickSlider?utm_source=github.com&utm_medium=referral&utm_content=Massetho/TrickSlider&utm_campaign=Badge_Grade_Dashboard)
+
 Community website about snowboard tricks
 
 ## Prerequisites
