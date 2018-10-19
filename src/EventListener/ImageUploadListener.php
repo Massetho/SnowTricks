@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Image;
-use App\Entity\TopImage;
 use App\Service\ImageUploader;
 use App\Service\ImagePath;
 

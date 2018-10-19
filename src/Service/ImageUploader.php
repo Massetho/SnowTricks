@@ -46,27 +46,11 @@ class ImageUploader
      */
     public function handleForm(FormInterface $form, Trick $trick)
     {
-        if ($form->has('topImage')) {
-            $image = $form['topImage']->getData();
-            if($image instanceof UploadedFile) {
-                $fileName = $this->upload($image);
-                $image = $form->get('topImage')->getData();
-                $image->setFile($fileName);
-                $trick->setTopImage($image);
-            }
-        }
         //Managing bottom images
         if ($form->has('bottomImages')) {
-            $file = $form['bottomImages']->getData();
-            if($file != null) {
-                foreach ($form->get('bottomImages') as $formBI) {
-                    $image = $formBI->getData();
-                    if ($image instanceof UploadedFile) {
-                        $fileName = $this->upload($image->getFile());
-                        $image->setFile($fileName);
-                        $trick->addBottomImages($image);
-                    }
-                }
+            foreach ($form->get('bottomImages') as $formBI) {
+                $image = $formBI->getData();
+                $trick->addBottomImages($image);
             }
         }
     }
