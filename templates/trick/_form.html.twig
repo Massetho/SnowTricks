@@ -2,7 +2,6 @@
 {{ form_start(form) }}
 
     <div class="container-relative top_image">
-        {# iterate over each existing tag and render its only field: name #}
             <img src="{{ asset(form.topImage.vars.data.webPath|default('img/trick/default.jpg')) }}">
         <div class="edit-links-absolute">
             {{ include('medias/image.edit.html.twig', { 'image' :form.topImage }) }}
@@ -15,7 +14,6 @@
         <div class="flex-container vignette-container">
 
             <div class="images flex-container col-6" data-prototype="{{ form_widget(form.bottomImages.vars.prototype)|e('html_attr') }}">
-                {# iterate over each existing tag and render its only field: name #}
                 {% for image in form.bottomImages %}
                     <div class="media-vignette col-lg-4 col-md-4 col-12">
                         <img class="card-img-top" src="{{ asset(image.vars.data.webPath|default('img/trick/default.jpg')) }}">
@@ -63,6 +61,5 @@
     {{ form_row(form.description) }}
     {{ form_row(form.groups) }}
 
-{# <button class="btn" id="submitTrickForm" onclick="$('#trickFormEdit').submit();">{{ button_label|default('Save') }}</button> #}
 <input class="btn btn-primary" type="submit" value="{{ button_label|default('Save') }}" />
 {{ form_end(form) }}

@@ -32,17 +32,6 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    token.entity.service:
-        class: '%token.entity%'
-
-    user.entity.service:
-        class: '%user.entity%'
-        arguments:
-            - "@token.entity.service"
-
-    App\Entity\Trick:
-        class: App\Entity\Trick
-
     App\Service\ImagePath:
         class: App\Service\ImagePath
         arguments:
